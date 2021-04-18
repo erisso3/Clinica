@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Clinica.Objects.Paciente>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Pacientes";
+    ViewBag.descripcion = "En este módulo se pueden ver los pacientes registrados, con opciones de registrar uno nuevo, ver sus recetas y eliminarlo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
@@ -54,14 +55,14 @@
                     @item.usuario
                 </td>
                 <td>
-                    <a href="#recetas" class="text-white">
+                    <a href="~/Recetas" class="text-white">
                         <i class="pe-7s-note2"></i>
-                    </a> 
+                    </a>
                 </td>
                 <td>
-                    <a href="#eliminar" class="text-white">
+                    <a href="#eliminar" class="text-white" data-toggle="modal" data-target="#eliminar">
                         <i class="pe-7s-trash"></i>
-                    </a> 
+                    </a>
                 </td>
             </tr>
         }
@@ -82,32 +83,32 @@
             <div class="modal-body">
                 @using (Html.BeginForm("Action", "Controller", FormMethod.Post, new { htmlAttributes = new { @class = "form-control" } }))
                 {
-                <div class="form-row">
-                    <div class="col-md-12 mb-12">
-                        <label for="validationCustom01">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="nombre" required>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-12">
+                            <label for="validationCustom01">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="nombre" required>
+                        </div>
+                        <div class="col-md-12 mb-12">
+                            <br />
+                            <label for="validationCustom01">Apellido paterno</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="apellido parteno" required>
+                        </div>
+                        <div class="col-md-12 mb-12">
+                            <br />
+                            <label for="validationCustom01">Apellido materno</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="apellido materno" required>
+                        </div>
+                        <div class="col-md-12 mb-12">
+                            <br />
+                            <label for="validationCustom01">Email</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="ejemplo@ejemplo.com" >
+                        </div>
+                        <div class="col-md-12 mb-12">
+                            <br />
+                            <label for="validationCustom01">Contraseña</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="contraseña" >
+                        </div>
                     </div>
-                    <div class="col-md-12 mb-12">
-                        <br />
-                        <label for="validationCustom01">Apellido paterno</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="apellido parteno" required>
-                    </div>
-                    <div class="col-md-12 mb-12">
-                        <br />
-                        <label for="validationCustom01">Apellido materno</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="apellido materno" required>
-                    </div>
-                    <div class="col-md-12 mb-12">
-                        <br />
-                        <label for="validationCustom01">Email</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="ejemplo@ejemplo.com" required>
-                    </div>
-                    <div class="col-md-12 mb-12">
-                        <br />
-                        <label for="validationCustom01">Contraseña</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="contraseña" required>
-                    </div>
-                </div>
                     <br />
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -115,8 +116,36 @@
                     </div>
                 }
             </div>
-           
+
         </div>
     </div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="eliminar" tabindex="1000" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">ELIMINAR PACIENTE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Action", "Controller", FormMethod.Post, new { htmlAttributes = new { @class = "form-control" } }))
+                {
+                    <p>¿Esta seguro de eliminar al paciente?</p>
+                    <br />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary">Eliminar</button>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
 

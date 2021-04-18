@@ -10,7 +10,8 @@ namespace Clinica.Objects
         public int id { set; get; }
         public string nombre { set; get; }
         public string dosis { set; get; }
-        public string precio { set; get; }
+        public double precio { set; get; }
+        public string indicaciones { set; get; }
 
         public override string ToString()
         {
