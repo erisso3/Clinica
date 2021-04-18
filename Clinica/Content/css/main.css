@@ -5775,14 +5775,15 @@ a.close.disabled {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    outline: 0
+    outline: 0;
 }
 
 .modal-dialog {
     position: relative;
     width: auto;
     margin: .5rem;
-    pointer-events: none
+    pointer-events: none;
+   
 }
 
 .modal.fade .modal-dialog {
@@ -5826,10 +5827,6 @@ a.close.disabled {
 }
 
 .modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1040;
     width: 100vw;
     height: 100vh;
     background-color: #000
@@ -5898,7 +5895,7 @@ a.close.disabled {
 @media (min-width: 576px) {
     .modal-dialog {
         max-width: 500px;
-        margin: 1.75rem auto
+        margin: 5.75rem auto
     }
 
     .modal-dialog-centered {
