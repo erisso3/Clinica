@@ -1805,9 +1805,6 @@ pre {
     background-color: rgba(0,0,0,0.03)
 }
 
-.table-hover tbody tr:hover {
-    background-color: #e0f3ff
-}
 
 .table-primary, .table-primary > th, .table-primary > td {
     background-color: #c9d5f4
