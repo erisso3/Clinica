@@ -192,7 +192,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="container body-content">
+                    <div class="container-fluid body-content">
                         @RenderBody()
                         <hr />
                         <footer>
@@ -208,5 +208,16 @@
     <script type="text/javascript" src="~/Scripts/main.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    <script>
+        $('#dataTable').DataTable({
+            "destroy": false,
+            pageLength: 7,
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
+            lengthMenu: [[5, 10, 15], [5, 10, 15]]
+        });
+
+    </script>
 </body>
 </html>
