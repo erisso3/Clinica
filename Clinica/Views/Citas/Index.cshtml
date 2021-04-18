@@ -3,94 +3,227 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+<div class="">
+    <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+        <li class="nav-item">
+            <a role="tab" class="nav-link active" id="tab-0" data-toggle="tab" href="#tab-content-0">
+                <span>Citas Pendientes</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a role="tab" class="nav-link" id="tab-1" data-toggle="tab" href="#tab-content-1">
+                <span>Citas Aceptadas</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a role="tab" class="nav-link" id="tab-2" data-toggle="tab" href="#tab-content-2">
+                <span>Citas Rechazadas</span>
+            </a>
+        </li>
+    </ul><br /><br />
+    <div class="tab-content">
+        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+            <div class="row">
+                <button class="mb-2 mr-2 btn btn-warning" style="font-size: 25px;">
+                    Registrar Cita
+                </button>
+                <div class="col-md-12 text-white bg-primary">
+                    <h3 class="text-center">Citas Pendientes</h3>
+                    <table class="table table-hover text-center" id="dataTable_CitasPendientes">
+                        <thead class="">
+                            <tr>
+                                <th class="text-center">
+                                    Nombre del Paciente
+                                </th>
+                                <th class="text-center">
+                                    Fecha
+                                </th>
+                                <th class="text-center">
+                                    Hora
+                                </th>
+                                <th>
+                                    Observación
+                                </th>
+                                <th class="text-center">Aceptar</th>
+                                <th class="text-center">Rechazar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-    <div class="">
-        <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
-            <li class="nav-item">
-                <a role="tab" class="nav-link active" id="tab-0" data-toggle="tab" href="#tab-content-0">
-                    <span>Citas Pendientes</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a role="tab" class="nav-link" id="tab-1" data-toggle="tab" href="#tab-content-1">
-                    <span>Citas Aceptadas</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a role="tab" class="nav-link" id="tab-2" data-toggle="tab" href="#tab-content-2">
-                    <span>Citas Rechazadas</span>
-                </a>
-            </li>
-        </ul><br /><br />
-        <div class="tab-content">
-            <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
-                <div class="row">
-                    <div class="col-md-12 text-white bg-primary" >
-                        <h3 class="text-center">Citas Pendientes</h3>
-                            <table class="table table-hover text-center" id="dataTable">
-                                <thead class="">
-                                    <tr>
-                                        <th class="text-center">
-                                            Nombre del Periodo
-                                        </th>
-                                        <th class="text-center">
-                                            Mes de inicio
-                                        </th>
-                                        <th class="text-center">
-                                            Mes final
-                                        </th>
-                                        <th>
-                                            Año
-                                        </th>
-                                        <th class="text-center">EDITAR</th>
-                                        <th class="text-center">DETALLES</th>
-                                        <th class="text-center">ELIMINAR</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                        <tr>
-                                            <td>
-                                                Hola
-                                            </td>
-                                            <td>
-                                                Hola
-                                            </td>
-                                            <td>
-                                                Hola
-                                            </td>
-                                            <td>
-                                                Hola
-                                            </td>
-                                            <td>
-                                                Hola
-                                            </td>
-                                            <td>
-                                                Hola
-                                            </td>
-                                            <td>
-                                                Hola
-                                            </td>
-                                        </tr>
-                                    
-                                </tbody>
-                            </table>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane tabs-animation fade" id="tab-content-1" role="tabpanel">
-                <div class="row">
-                    <H2>Modulo de registrar</H2>
-                </div>
+                            <tr>
+                                <td>
+                                    Erick Mitchell Echeverría Celaya
+                                </td>
+                                <td>
+                                    30/04/2020
+                                </td>
+                                <td>
+                                    15:30
+                                </td>
+                                <td>
+                                    Dolor de estomago
+                                </td>
+                                <td>
+                                    <button class="mb-2 mr-2 btn btn-success">
+                                        Aceptar
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="mb-2 mr-2 btn btn-danger">
+                                        Rechazar
+                                    </button>
+                                </td>
+                            </tr>
 
-            </div>
-            <div class="tab-pane tabs-animation fade" id="tab-content-2" role="tabpanel">
-                <div class="row">
-                    <H2>Modulo de aceptar/rechazar</H2>
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
         </div>
+        <div class="tab-pane tabs-animation fade" id="tab-content-1" role="tabpanel">
+            <div class="row">
+                <div class="col-md-12 text-white bg-primary">
+                    <h3 class="text-center">Citas Aceptada</h3>
+                    <table class="table table-hover text-center" id="dataTable_CitasAceptadas">
+                        <thead class="">
+                            <tr>
+                                <th class="text-center">
+                                    Nombre del Paciente
+                                </th>
+                                <th class="text-center">
+                                    Fecha
+                                </th>
+                                <th class="text-center">
+                                    Hora
+                                </th>
+                                <th>
+                                    Observación
+                                </th>
+                                <th class="text-center">Ver Detalles</th>
+                                <th class="text-center">Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
+                            <tr>
+                                <td>
+                                    Erick Mitchell Echeverría Celaya
+                                </td>
+                                <td>
+                                    30/04/2020
+                                </td>
+                                <td>
+                                    15:30
+                                </td>
+                                <td>
+                                    Dolor de estomago
+                                </td>
+                                <td>
+                                    <a class="mb-2 mr-2 btn btn-info" href="~/Citas/DetallesCita">
+                                   
+                                            Ver
+                                       
+                                    </a>
+                                </td>
+                                <td>
+                                    <button class="mb-2 mr-2 btn btn-danger">
+                                        Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="tab-pane tabs-animation fade" id="tab-content-2" role="tabpanel">
+            <div class="row">
+                <div class="col-md-12 text-white bg-primary">
+                    <h3 class="text-center">Citas Rechazadas</h3>
+                    <table class="table table-hover text-center" id="dataTable_CitasRechazadas">
+                        <thead class="">
+                            <tr>
+                                <th class="text-center">
+                                    Nombre del Paciente
+                                </th>
+                                <th class="text-center">
+                                    Fecha
+                                </th>
+                                <th class="text-center">
+                                    Hora
+                                </th>
+                                <th>
+                                    Observación
+                                </th>
+                                <th class="text-center">Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td>
+                                    Erick Mitchell Echeverría Celaya
+                                </td>
+                                <td>
+                                    30/04/2020
+                                </td>
+                                <td>
+                                    15:30
+                                </td>
+                                <td>
+                                    Dolor de estomago
+                                </td>
+                                <td>
+                                    <button class="mb-2 mr-2 btn btn-danger">
+                                        Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
     </div>
+
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+<script>
+    $('#dataTable_CitasPendientes').DataTable({
+        "destroy": false,
+        pageLength: 7,
+        "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+        },
+        lengthMenu: [[5, 10, 15], [5, 10, 15]]
+    });
+
+    $('#dataTable_CitasAceptadas').DataTable({
+        "destroy": false,
+        pageLength: 7,
+        "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+        },
+        lengthMenu: [[5, 10, 15], [5, 10, 15]]
+    });
+
+    $('#dataTable_CitasRechazadas').DataTable({
+        "destroy": false,
+        pageLength: 7,
+        "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+        },
+        lengthMenu: [[5, 10, 15], [5, 10, 15]]
+    });
+
+</script>
 

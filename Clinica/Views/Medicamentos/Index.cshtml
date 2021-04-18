@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <div class="row">
+        <div class="col-md-12 text-white bg-primary">
+            <h3 class="text-center">Medicamentos</h3>
+            <table class="table table-hover text-center" id="dataTable_CitasPendientes">
+                <thead class="">
+                    <tr>
+                        <th class="text-center">
+                            Nombre del medicamento
+                        </th>
+                        <th class="text-center">
+                            Fecha
+                        </th>
+                        <th class="text-center">
+                            Hora
+                        </th>
+                        <th>
+                            Observación
+                        </th>
+                        <th class="text-center">Aceptar</th>
+                        <th class="text-center">Rechazar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            Erick Mitchell Echeverría Celaya
+                        </td>
+                        <td>
+                            30/04/2020
+                        </td>
+                        <td>
+                            15:30
+                        </td>
+                        <td>
+                            Dolor de estomago
+                        </td>
+                        <td>
+                            <button class="mb-2 mr-2 btn btn-success">
+                                Aceptar
+                            </button>
+                        </td>
+                        <td>
+                            <button class="mb-2 mr-2 btn btn-danger">
+                                Rechazar
+                            </button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+@Scripts.Render("~/bundles/jquery")
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+<script>
+    $('#dataTable_CitasPendientes').DataTable({
+        "destroy": false,
+        pageLength: 7,
+        "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+        },
+        lengthMenu: [[5, 10, 15], [5, 10, 15]]
+    });
+
+    $('#dataTable_CitasAceptadas').DataTable({
+        "destroy": false,
+        pageLength: 7,
+        "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+        },
+        lengthMenu: [[5, 10, 15], [5, 10, 15]]
+    });
+
+    $('#dataTable_CitasRechazadas').DataTable({
+        "destroy": false,
+        pageLength: 7,
+        "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+        },
+        lengthMenu: [[5, 10, 15], [5, 10, 15]]
+    });
+
+</script>
