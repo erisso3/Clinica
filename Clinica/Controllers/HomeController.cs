@@ -15,7 +15,7 @@ namespace Clinica.Controllers
     public class HomeController : Controller
     {
         
-        public async Task<ActionResult> Index()
+        /*public async Task<ActionResult> Index()
         {
             List<Medicamento> medicamentos = new List<Medicamento>();
 
@@ -51,19 +51,12 @@ namespace Clinica.Controllers
             
 
             return View();
-        }
+        }*/
         
-        public ActionResult About()
+        public ActionResult Index()
         {
-            ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
+            ViewBag.estadoMenu = "mm-active";
             return View();
         }
 

@@ -6,17 +6,12 @@ using System.Web.Mvc;
 
 namespace Clinica.Controllers
 {
-    public class CitasController : Controller
+    public class MedicamentosController : Controller
     {
-        // GET: Citas
+        // GET: Medicamentos
         public ActionResult Index()
         {
-            ViewBag.estadoCitas= "mm-active";
-            return View();
-        }
-
-        public ActionResult DetallesCita()
-        {
+            ViewBag.estadoMedicamentos = "mm-active";
             return View();
         }
     }
