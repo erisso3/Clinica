@@ -51,5 +51,6 @@ Create Table Recetas(
     nombre varchar not null,
     ids_medicamentos varchar(50) not null,
     fecha date not null,
-    observacion varchar(100) not null
+    observacion varchar(100) not null,
+    instruccion varchar(100) not null
 )
