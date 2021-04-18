@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Clinica.Objects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,12 @@ namespace Clinica.Controllers
         // GET: Pacientes
         public ActionResult Index()
         {
-            return View();
+            List<Paciente> pacientes = new List<Paciente>();
+            pacientes.Add(new Paciente("Victor","Vasquez","Poblete","victoe680@gmail.com"));
+            pacientes.Add(new Paciente("Manuel","Iturbe","Flores","mpoblete501@gmail.com"));
+            pacientes.Add(new Paciente("Juan","Lopez","Castro","juan@gmail.com"));
+
+            return View(pacientes);
         }
     }
 }

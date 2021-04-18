@@ -13,7 +13,7 @@ Create table Medicamentos(
     nombre varchar(50) not null,
     dosis varchar(10) not null,
     precio double not null,
-    Observaciones varchar(100) not null
+    indicaciones varchar(100) not null
 )
 
 Create Table Doctores(
@@ -48,7 +48,8 @@ Create Table Citas(
 Create Table Recetas(
     id_receta serial primary key not null,
     id_cita integer not null,
+    nombre varchar not null,
     ids_medicamentos varchar(50) not null,
-    observacion varchar(100) not null,
-    direccion text not null,
+    fecha date not null,
+    observacion varchar(100) not null
 )

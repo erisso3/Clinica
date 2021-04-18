@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace Clinica.Objects
+{
+    public class Medicamento
+    {
+        public int id { set; get; }
+        public string nombre { set; get; }
+        public string dosis { set; get; }
+        public string precio { set; get; }
+
+        public override string ToString()
+        {
+            return String.Format("Id: {0}, nombre: {1}, dosis: {2}, precio: {3}", id, nombre, dosis, precio);
+        }
+    }
+}
