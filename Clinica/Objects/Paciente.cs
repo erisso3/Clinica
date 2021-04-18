@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Clinica.Models
+namespace Clinica.Objects
 {
-    public class Class1
+    public class Paciente
     {
     }
 }
