@@ -17,28 +17,37 @@ namespace Clinica.Controllers
         public async Task<ActionResult> Index()
         {
             List<Medicamento> medicamentos = new List<Medicamento>();
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("http://localhost:3000");
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage resp = await client.GetAsync("/");
-                if (resp.IsSuccessStatusCode)
+            try
+            {
+                using (var client = new HttpClient())
                 {
-                    var medResponde = resp.Content.ReadAsStringAsync().Result;
-                    medicamentos = JsonConvert.DeserializeObject<List<Medicamento>>(medResponde);
-                    System.Diagnostics.Debug.WriteLine("Exito");
-                    foreach (var item in medicamentos)
+                    client.BaseAddress = new Uri("http://localhost:3000");
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage resp = await client.GetAsync("/");
+                    if (resp.IsSuccessStatusCode)
                     {
-                        System.Diagnostics.Debug.WriteLine(item);
+                        var medResponde = resp.Content.ReadAsStringAsync().Result;
+                        medicamentos = JsonConvert.DeserializeObject<List<Medicamento>>(medResponde);
+                        System.Diagnostics.Debug.WriteLine("Exito");
+                        foreach (var item in medicamentos)
+                        {
+                            System.Diagnostics.Debug.WriteLine(item);
+                        }
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine("No Exito");
                     }
                 }
-                else
-                {
-                    System.Diagnostics.Debug.WriteLine("No Exito");
-                }
             }
+            catch (Exception)
+            {
+                System.Diagnostics.Debug.WriteLine("No Exito");
+            }
+            
 
             return View();
         }
@@ -57,36 +66,6 @@ namespace Clinica.Controllers
             return View();
         }
 
-        private void GetItems()
-        {
-            var url = $"http://localhost:3000";
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
-            request.ContentType = "application/json";
-            request.Accept = "application/json";
-            try
-            {
-                using (WebResponse response = request.GetResponse())
-                {
-                    using (Stream strReader = response.GetResponseStream())
-                    {
-                        if (strReader == null) return;
-                        using (StreamReader objReader = new StreamReader(strReader))
-                        {
-                            string responseBody = objReader.ReadToEnd();
-                            // Do something with responseBody
-                            System.Diagnostics.Debug.WriteLine(responseBody);
-                        }
-                    }
-                }
-            }
-            catch (WebException ex)
-            {
-                // Handle error
-            }
-        }
-
-        
     }
 
     class Medicamento
