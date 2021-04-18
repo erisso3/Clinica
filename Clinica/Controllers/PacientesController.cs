@@ -16,7 +16,7 @@ namespace Clinica.Controllers
             pacientes.Add(new Paciente("Victor","Vasquez","Poblete","victoe680@gmail.com"));
             pacientes.Add(new Paciente("Manuel","Iturbe","Flores","mpoblete501@gmail.com"));
             pacientes.Add(new Paciente("Juan","Lopez","Castro","juan@gmail.com"));
-
+            ViewBag.estadoPacientes = "mm-active";
             return View(pacientes);
         }
     }
