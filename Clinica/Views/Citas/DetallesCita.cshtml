@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Clinica.Objects.Medicamento>
 @{
     ViewBag.Title = "DetallesCita";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -66,7 +66,7 @@
                                     <thead class="">
                                         <tr>
                                             <th class="text-center">
-                                                Nombre del Medicamento
+                                                Nombre del medicamento
                                             </th>
                                             <th class="text-center">
                                                 Dosis
@@ -77,29 +77,28 @@
                                             <th>
                                                 Indicaciones
                                             </th>
-                                            <th class="text-center">Agregar</th>
+                                            <th>Agregar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
-                                        <tr>
-                                            <td>
-                                                Erick Mitchell Echeverría Celaya
-                                            </td>
-                                            <td>
-                                                30/04/2020
-                                            </td>
-                                            <td>
-                                                15:30
-                                            </td>
-                                            <td>
-                                                Dolor de estomago
-                                            </td>
-                                            <td>
-                                                <input type="checkbox" />
-                                            </td>
-                                        </tr>
-
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @item.nombre
+                                                </td>
+                                                <td>
+                                                    @item.dosis
+                                                </td>
+                                                <td>
+                                                    @item.precio
+                                                </td>
+                                                <td>
+                                                    @item.indicaciones
+                                                </td>
+                                                <td><input type="checkbox" /></td>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -119,12 +118,12 @@
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
     <script>
         $('#dataTable_Medicamentos').DataTable({
-        "destroy": false,
-        pageLength: 7,
-        "language": {
-            "url": "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-        },
-        lengthMenu: [[5, 10, 15], [5, 10, 15]]
-    });
+            "destroy": false,
+            pageLength: 7,
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
+            lengthMenu: [[5, 10, 15], [5, 10, 15]]
+        });
 
     </script>
