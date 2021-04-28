@@ -23,7 +23,8 @@ namespace Clinica.Controllers
         /*public ActionResult DetallesCita()
         {
             return View();
-        }*/
+        }
+        */
 
         public async Task<ActionResult> DetallesCita()
         {
