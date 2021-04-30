@@ -1,4 +1,7 @@
-﻿using Clinica.Objects;
+﻿using Clinica.DAO;
+using Clinica.Models;
+using Clinica.Objects;
+using iTextSharp.text.pdf.security;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -7,24 +10,46 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http.Cors;
 using System.Web.Mvc;
 
 namespace Clinica.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CitasController : Controller
     {
+        private DAOCitas daoCitas = new DAOCitas();
         // GET: Citas
         public ActionResult Index()
         {
             ViewBag.estadoCitas= "mm-active";
             return View();
         }
-
-        /*public ActionResult DetallesCita()
+        [HttpPost]
+        public JsonResult AgendarCita([Bind(Include = "id_paciente,id_doctor,fecha,hora,observacion")] CitaObject cita)
         {
-            return View();
+            bool result = daoCitas.agregar(cita);
+            if (result)
+            {
+                return Json("exito", JsonRequestBehavior.AllowGet);
+            }
+            return Json("no", JsonRequestBehavior.AllowGet);
         }
-        */
+
+        public JsonResult MisCitas(int id)
+        {
+            List<CitaObject> lista = daoCitas.getCitasPaciente(id);
+            if (lista !=null)
+            {
+                foreach (var item in lista)
+                {
+                    item.fecha = item.fechag.ToString("dd/MM/yyyy");
+                }
+                return Json(new { lista }, JsonRequestBehavior.AllowGet);
+            }
+            return Json("no", JsonRequestBehavior.AllowGet);
+        }
+
 
         public async Task<ActionResult> DetallesCita()
         {

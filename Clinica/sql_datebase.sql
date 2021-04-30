@@ -24,8 +24,7 @@ Create Table Doctores(
     ape_pat varchar(30) not null,
     ape_mat varchar(30) not null,
     usuario varchar(25) not null,
-    password varchar(20) not null,
-    tipe INT NOT NULL
+    password varchar(64) not null
 )
 
 Create Table Pacientes(
@@ -34,7 +33,7 @@ Create Table Pacientes(
     ape_pat varchar(30) not null,
     ape_mat varchar(30) not null,
     usuario varchar(25) ,
-    password varchar(20)
+    password varchar(64)
 )
 
 Create Table Citas(
@@ -66,3 +65,13 @@ Create Table Recetas(
     observacion varchar(100) not null,
     instruccion varchar(100) not null
 )
+
+/***********************************************************************/
+INSERT INTO Doctores(nombre,ape_pat,ape_mat,usuario,password) VALUES('Johnny', 'Sins', 'Echeverría','erisso@gmail.com','123');
+
+
+INSERT INTO Pacientes(nombre,ape_pat,ape_mat,usuario,password) VALUES('Victor', 'Vasquez', 'Poblete','victor@gmail.com','123');
+
+
+
+/* Install-Package Microsoft.AspNet.WebApi.Cors */
