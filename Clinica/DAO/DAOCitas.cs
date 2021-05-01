@@ -23,7 +23,8 @@ namespace Clinica.DAO
             cita.id_paciente = citaObject.id_paciente;
             cita.id_doctor = citaObject.id_doctor;
             cita.status = 0;
-            DateTime DateObject = DateTime.ParseExact(citaObject.fecha, "yyyy/MM/dd", null);
+            System.Diagnostics.Debug.WriteLine("FECHA: "+citaObject.fecha);
+            DateTime DateObject = DateTime.ParseExact(citaObject.fecha, "yyyy-MM-dd", null);
             TimeSpan time = new TimeSpan(citaObject.hora, 0, 0);
             cita.fecha = DateObject;
             cita.hora = time;

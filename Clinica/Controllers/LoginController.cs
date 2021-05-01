@@ -24,23 +24,25 @@ namespace Clinica.Controllers
         [HttpPost]
         public JsonResult LoginMovil(string usuario, string password)
         {
+            bool result = false;
             Pacientes paciente = dao.getPaciente(usuario, password);
             if (paciente !=null)
             {
-                return Json(new {paciente}, JsonRequestBehavior.AllowGet);
+                result = true;
+                return Json(new {paciente,result}, JsonRequestBehavior.AllowGet);
             }
             return Json("no", JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public JsonResult RegistroMovil([Bind(Include = "nombre,ape_pat,ape_mat,usuario,password")] Pacientes paciente)
         {
-
+            bool result = false;
             if (paciente != null)
             {
-                bool result = daoPacientes.agregar(paciente);
+                result = daoPacientes.agregar(paciente);
                 return Json(new { result }, JsonRequestBehavior.AllowGet);
             }
-            return Json("no", JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }
