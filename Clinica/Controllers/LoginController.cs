@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Http.Cors;
 using System.Web.Mvc;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Clinica.Controllers
 {
@@ -19,7 +21,26 @@ namespace Clinica.Controllers
         {
             return View();
         }
+        //POST:Login
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(string usuario, string password)
+        {
+            ContextDb db = new ContextDb();
+            string hashPassword = EncodePassword(password);
+            Doctores doctor = DAODoctores.getDoctor(usuario,hashPassword);
+            if (doctor!=null)
+            {
+                doctor.password = null;
+                Session["Doctor"] = doctor;
+                Session.Timeout = 30;
+                return RedirectToAction("", "Home");
+            }
+            ViewBag.Mensaje = "El Correo y/o contraseña son incorrecta";
+            return View();
+        }
 
+        //Movil
         // POST: Login
         [HttpPost]
         public JsonResult LoginMovil(string usuario, string password)
@@ -43,6 +64,23 @@ namespace Clinica.Controllers
                 return Json(new { result }, JsonRequestBehavior.AllowGet);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult LogOut()
+        {
+            Session["Doctor"] = null;
+            Session.Abandon();
+            return RedirectToAction("", "Login");
+        }
+
+        public static string EncodePassword(string originalPassword)
+        {
+            SHA1 sha1 = new SHA1CryptoServiceProvider();
+
+            byte[] inputBytes = (new UnicodeEncoding()).GetBytes(originalPassword);
+            byte[] hash = sha1.ComputeHash(inputBytes);
+
+            return Convert.ToBase64String(hash);
         }
     }
 }

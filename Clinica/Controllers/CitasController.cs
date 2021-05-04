@@ -22,9 +22,71 @@ namespace Clinica.Controllers
         // GET: Citas
         public ActionResult Index()
         {
+            Doctores doctor = (Doctores)Session["Doctor"];
+            if (doctor == null)
+            {
+                return RedirectToAction("LogOut", "Login");
+            }
             ViewBag.estadoCitas= "mm-active";
+            DAOCitas daoCitas = new DAOCitas();
+            List <CitasDoctorObject> listaCitasPendientes=daoCitas.getCitasPendientes(doctor.id_doctor);
+            TempData["CitasPendiantes"] = listaCitasPendientes;
+            List<CitasDoctorObject> listaCitasAceptadas = daoCitas.getCitasAceptadas(doctor.id_doctor);
+            TempData["CitasAceptadas"] = listaCitasAceptadas;
+            List<CitasDoctorObject> listaCitasRechazadas = daoCitas.getCitasRechazadas(doctor.id_doctor);
+            TempData["CitasRechazadas"] = listaCitasRechazadas;
+            List<CitasDoctorObject> listaCitasRealizadas = daoCitas.getCitasRealizadas(doctor.id_doctor);
+            TempData["CitasRealizadas"] = listaCitasRealizadas;
             return View();
         }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult actualizarStatusCita(int id_cita, int status)
+        {
+            Doctores doctor = (Doctores)Session["Doctor"];
+            if (doctor == null)
+            {
+                return RedirectToAction("LogOut", "Login");
+            }
+            bool bandera = daoCitas.statusCita(id_cita,status);
+            if (bandera)
+            {
+                System.Diagnostics.Debug.WriteLine("Todo chido");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("No chido");
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult eliminarCita(int id_cita)
+        {
+            Doctores doctor = (Doctores)Session["Doctor"];
+            if (doctor == null)
+            {
+                return RedirectToAction("LogOut", "Login");
+            }
+            bool bandera = daoCitas.eliminarCita(id_cita);
+            if (bandera)
+            {
+                System.Diagnostics.Debug.WriteLine("Todo chido");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("No chido");
+            }
+            return RedirectToAction("Index");
+
+        }
+
+
+        //Movil
         [HttpPost]
         public JsonResult AgendarCita([Bind(Include = "id_paciente,id_doctor,fecha,hora,observacion")] CitaObject cita)
         {

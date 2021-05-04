@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    Clinica.Models.Doctores doctor =(Clinica.Models.Doctores)Session["Doctor"];
+    String nombre = doctor.nombre + " " + doctor.ape_pat;
+    String usuario = doctor.usuario;
+}
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8">
@@ -72,16 +77,18 @@
                                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                             <button type="button" tabindex="0" class="dropdown-item">Mi cuenta</button>
                                             <div tabindex="-1" class="dropdown-divider"></div>
+                                            <button type="button" tabindex="0" class="dropdown-item">Cerrar Sesión</button>
+                                            <div tabindex="-1" class="dropdown-divider"></div>
                                             <button type="button" tabindex="0" class="dropdown-item">Ayuda</button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="widget-content-left  ml-3">
                                     <div class="widget-heading">
-                                        Usuario@usuario.com
+                                        Usuario : @usuario
                                     </div>
                                     <div class="widget-subheading">
-                                        Doctor
+                                        Doctor : @nombre
                                     </div>
                                 </div>
                             </div>
