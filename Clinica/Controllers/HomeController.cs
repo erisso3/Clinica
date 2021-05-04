@@ -10,6 +10,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Clinica.Models;
 
 namespace Clinica.Controllers
 {
@@ -56,7 +57,11 @@ namespace Clinica.Controllers
         
         public ActionResult Index()
         {
-
+            Doctores doctor = (Doctores)Session["Doctor"];
+            if (doctor == null)
+            {
+                return RedirectToAction("LogOut", "Login");
+            }
             ViewBag.estadoMenu = "mm-active";
             return View();
         }

@@ -18,12 +18,21 @@
     </div>
     <div class="form">
         <div class="thumbnail"><img src="https://images.vexels.com/media/users/3/208291/isolated/preview/02b2830761405fae3d0422091abc8b8d-icono-de-trazo-de-ubicaci-oacute-n-del-hospital-by-vexels.png" /></div>
-        <form class="login-form">
-            <input type="text" placeholder="Usuario" />
-            <input type="password" placeholder="Contraseña" />
-            <button>Iniciar sesión</button>
-        </form>
+        @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @class = "login-form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <input name="usuario" type="text" placeholder="Usuario" />
+            <input name="password" type="password" placeholder="Contraseña" />
+            <button type="submit">Iniciar sesión</button>
+            if (ViewBag.Mensaje != null)
+            {
+                <br /><br />
+                <div class="text-center text-danger msg-error" style="color:red;">@ViewBag.Mensaje </div>
+            }
+        }
     </div>
+
 </body>
 </html>
 

@@ -3,6 +3,10 @@
     ViewBag.Title = "Index";
     ViewBag.descripcion = "En este módulo se pueden ver las citas pendientes, las aceptadas y las rechazadas";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Clinica.Objects.CitasDoctorObject> listaCitasPendientes = (List<Clinica.Objects.CitasDoctorObject>)TempData["CitasPendiantes"];
+    List<Clinica.Objects.CitasDoctorObject> listaCitasAceptadas = (List<Clinica.Objects.CitasDoctorObject>)TempData["CitasAceptadas"];
+    List<Clinica.Objects.CitasDoctorObject> listaCitasRechazadas = (List<Clinica.Objects.CitasDoctorObject>)TempData["CitasRechazadas"];
+    List<Clinica.Objects.CitasDoctorObject> listaCitasRealizadas = (List<Clinica.Objects.CitasDoctorObject>)TempData["CitasRealizadas"];
 }
 <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
 <div class="">
@@ -20,6 +24,11 @@
         <li class="nav-item">
             <a role="tab" class="nav-link" id="tab-2" data-toggle="tab" href="#tab-content-2">
                 <span>Citas Rechazadas</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a role="tab" class="nav-link" id="tab-3" data-toggle="tab" href="#tab-content-3">
+                <span>Citas Realizadas</span>
             </a>
         </li>
     </ul><br /><br />
@@ -52,32 +61,33 @@
                             </tr>
                         </thead>
                         <tbody>
-
-                            <tr>
-                                <td>
-                                    Erick Mitchell Echeverría Celaya
-                                </td>
-                                <td>
-                                    30/04/2020
-                                </td>
-                                <td>
-                                    15:30
-                                </td>
-                                <td>
-                                    Dolor de estomago
-                                </td>
-                                <td>
-                                    <button class="mb-2 mr-2 btn btn-success">
-                                        Aceptar
-                                    </button>
-                                </td>
-                                <td>
-                                    <button class="mb-2 mr-2 btn btn-danger">
-                                        Rechazar
-                                    </button>
-                                </td>
-                            </tr>
-
+                            @foreach (var item in listaCitasPendientes)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.nombrePaciente
+                                    </td>
+                                    <td>
+                                        @item.fecha.ToShortDateString()
+                                    </td>
+                                    <td>
+                                        @item.hora
+                                    </td>
+                                    <td>
+                                        @item.observacion
+                                    </td>
+                                    <td>
+                                        <button class="mb-2 mr-2 btn btn-success" type="button" data-toggle="modal" data-target="#modalPush" onclick="OpenModal(@item.id_cita,1)">
+                                            Aceptar
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button class="mb-2 mr-2 btn btn-danger" type="button" data-toggle="modal" data-target="#modalPush" onclick="OpenModal(@item.id_cita,2)">
+                                            Rechazar
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
 
@@ -108,34 +118,33 @@
                             </tr>
                         </thead>
                         <tbody>
-
-                            <tr>
-                                <td>
-                                    Erick Mitchell Echeverría Celaya
-                                </td>
-                                <td>
-                                    30/04/2020
-                                </td>
-                                <td>
-                                    15:30
-                                </td>
-                                <td>
-                                    Dolor de estomago
-                                </td>
-                                <td>
-                                    <a class="mb-2 mr-2 btn btn-info" href="~/Citas/DetallesCita">
-
-                                        Ver
-
-                                    </a>
-                                </td>
-                                <td>
-                                    <button class="mb-2 mr-2 btn btn-danger">
-                                        Eliminar
-                                    </button>
-                                </td>
-                            </tr>
-
+                            @foreach (var item in listaCitasAceptadas)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.nombrePaciente
+                                    </td>
+                                    <td>
+                                        @item.fecha.ToShortDateString()
+                                    </td>
+                                    <td>
+                                        @item.hora
+                                    </td>
+                                    <td>
+                                        @item.observacion
+                                    </td>
+                                    <td>
+                                        <a class="mb-2 mr-2 btn btn-info" href="~/Citas/DetallesCita">
+                                            Ver
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <button class="mb-2 mr-2 btn btn-danger" type="button" data-toggle="modal" data-target="#modalConfirmDelete" onclick="OpenModalDelete(@item.id_cita)">
+                                            Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
 
@@ -166,27 +175,79 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach (var item in listaCitasRechazadas)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.nombrePaciente
+                                    </td>
+                                    <td>
+                                        @item.fecha.ToShortDateString()
+                                    </td>
+                                    <td>
+                                        @item.hora
+                                    </td>
+                                    <td>
+                                        @item.observacion
+                                    </td>
+                                    <td>
+                                        <button class="mb-2 mr-2 btn btn-danger" type="button" data-toggle="modal" data-target="#modalConfirmDelete" onclick="OpenModalDelete(@item.id_cita)">
+                                            Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
 
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane tabs-animation fade" id="tab-content-3" role="tabpanel">
+            <div class="row">
+                <div class="col-md-12 text-white bg-primary">
+                    <h3 class="text-center">Citas Realizadas</h3>
+                    <table class="table table-hover text-center" id="dataTable_CitasRealizadas">
+                        <thead class="">
                             <tr>
-                                <td>
-                                    Erick Mitchell Echeverría Celaya
-                                </td>
-                                <td>
-                                    30/04/2020
-                                </td>
-                                <td>
-                                    15:30
-                                </td>
-                                <td>
-                                    Dolor de estomago
-                                </td>
-                                <td>
-                                    <button class="mb-2 mr-2 btn btn-danger">
-                                        Eliminar
-                                    </button>
-                                </td>
+                                <th class="text-center">
+                                    Nombre del Paciente
+                                </th>
+                                <th class="text-center">
+                                    Fecha
+                                </th>
+                                <th class="text-center">
+                                    Hora
+                                </th>
+                                <th>
+                                    Observación
+                                </th>
+                                <th class="text-center">Eliminar</th>
                             </tr>
-
+                        </thead>
+                        <tbody>
+                            @foreach (var item in listaCitasRealizadas)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.nombrePaciente
+                                    </td>
+                                    <td>
+                                        @item.fecha.ToShortDateString()
+                                    </td>
+                                    <td>
+                                        @item.hora
+                                    </td>
+                                    <td>
+                                        @item.observacion
+                                    </td>
+                                    <td>
+                                        <button class="mb-2 mr-2 btn btn-danger" type="button" data-toggle="modal" data-target="#modalConfirmDelete" onclick="OpenModalDelete(@item.id_cita)">
+                                            Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
 
@@ -209,37 +270,37 @@
             <div class="modal-body">
                 @using (Html.BeginForm("Action", "Controller", FormMethod.Post, new { htmlAttributes = new { @class = "form-control" } }))
                 {
-                <div class="form-row">
-                    <div class="col-md-12 mb-12">
-                        <label for="validationCustom01">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="nombre" required>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-12">
+                            <label for="validationCustom01">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="nombre" required>
+                        </div>
+                        <div class="col-md-12 mb-12">
+                            <br />
+                            <label for="validationCustom01">Apellido paterno</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="apellido parteno" required>
+                        </div>
+                        <div class="col-md-12 mb-12">
+                            <br />
+                            <label for="validationCustom01">Apellido materno</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="apellido materno" required>
+                        </div>
+                        <div class="col-md-12 mb-12">
+                            <br />
+                            <label for="validationCustom01">Fecha</label>
+                            <input type="date" class="form-control" id="nombre" required>
+                        </div>
+                        <div class="col-md-12 mb-12">
+                            <br />
+                            <label for="validationCustom01">Hora</label>
+                            <input type="time" class="form-control" id="nombre" required>
+                        </div>
+                        <div class="col-md-12 mb-12">
+                            <br />
+                            <label for="validationCustom01">Observación</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="Observación" required>
+                        </div>
                     </div>
-                    <div class="col-md-12 mb-12">
-                        <br />
-                        <label for="validationCustom01">Apellido paterno</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="apellido parteno" required>
-                    </div>
-                    <div class="col-md-12 mb-12">
-                        <br />
-                        <label for="validationCustom01">Apellido materno</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="apellido materno" required>
-                    </div>
-                    <div class="col-md-12 mb-12">
-                        <br />
-                        <label for="validationCustom01">Fecha</label>
-                        <input type="date" class="form-control" id="nombre" required>
-                    </div>
-                    <div class="col-md-12 mb-12">
-                        <br />
-                        <label for="validationCustom01">Hora</label>
-                        <input type="time" class="form-control" id="nombre" required>
-                    </div>
-                    <div class="col-md-12 mb-12">
-                        <br />
-                        <label for="validationCustom01">Observación</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="Observación" required>
-                    </div>
-                </div>
                     <br />
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -251,6 +312,79 @@
         </div>
     </div>
 </div>
+
+<!--Modal: modalConfirmDelete-->
+<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+        <!--Content-->
+        <div class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <p class="heading">¿Estás seguro/a?</p>
+            </div>
+            <!--Body-->
+            @using (Html.BeginForm("eliminarCita", "Citas", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <i class="fas fa-times fa-4x animated rotateIn"></i>
+                    <input type="hidden" name="id_cita" id="id_citaE" value="" />
+                </div>
+
+                <!--Footer-->
+                <div class="modal-footer flex-center">
+                    <button type="submit" class="btn  btn-outline-danger">SI</button>
+                    <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">NO</a>
+                </div>
+            }
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+<!--Modal: modalConfirmDelete-->
+
+
+<!-- Button trigger modal-->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPush">Launch modal</button>
+
+<!--Modal: modalPush-->
+<div class="modal fade" id="modalPush" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-info" role="document">
+    <!--Content-->
+      <div class="modal-content text-center">
+          <!--Header-->
+          <div class="modal-header d-flex justify-content-center">
+              <p class="heading">Actualizar Cita</p>
+          </div>
+
+          <!--Body-->
+          @using (Html.BeginForm("actualizarStatusCita", "Citas", FormMethod.Post))
+          {
+              @Html.AntiForgeryToken()
+              <div class="modal-body">
+
+                  <i class="fas fa-bell fa-4x animated rotateIn mb-4"></i>
+
+                  <p>¿Está seguro/a de actualizar la cita?</p>
+                  <input type="hidden" name="id_cita" id="id_cita" value="" />
+                  <input type="hidden" name="status" id="status" value="" />
+              </div>
+
+              <!--Footer-->
+              <div class="modal-footer flex-center">
+                  <button type="submit" class="btn btn-info">SI</button>
+                  <a type="button" class="btn btn-outline-info waves-effect" data-dismiss="modal">NO</a>
+              </div>
+          }
+      </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!--Modal: modalPush-->
+
+
 
 
 
@@ -286,5 +420,22 @@
         lengthMenu: [[5, 10, 15], [5, 10, 15]]
     });
 
+    $('#dataTable_CitasRealizadas').DataTable({
+        "destroy": false,
+        pageLength: 7,
+        "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+        },
+        lengthMenu: [[5, 10, 15], [5, 10, 15]]
+    });
+
+    function OpenModal(valor,valor2) {
+        document.getElementById("id_cita").value = valor;
+        document.getElementById("status").value = valor2;
+    }
+
+    function OpenModalDelete(valor) {
+        document.getElementById("id_citaE").value = valor;
+    }
 </script>
 

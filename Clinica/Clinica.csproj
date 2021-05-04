@@ -167,6 +167,7 @@
     <Compile Include="Models\Recetas.cs" />
     <Compile Include="Models\Tickets.cs" />
     <Compile Include="Objects\CitaObject.cs" />
+    <Compile Include="Objects\CitasDoctorObject.cs" />
     <Compile Include="Objects\Medicamento.cs" />
     <Compile Include="Objects\Paciente.cs" />
     <Compile Include="Objects\Receta.cs" />
