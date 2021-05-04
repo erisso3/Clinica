@@ -156,6 +156,7 @@
     <Compile Include="DAO\DAODoctores.cs" />
     <Compile Include="DAO\DAOLogin.cs" />
     <Compile Include="DAO\DAOPacientes.cs" />
+    <Compile Include="DAO\DAORecetas.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -206,6 +207,7 @@
     <Content Include="fonts\Pe-icon-7-stroke.ttf" />
     <Content Include="fonts\Pe-icon-7-stroke.woff" />
     <Content Include="Files\Recetas\Victor_tarea1_u2.pdf" />
+    <Content Include="Files\Recetas\prueba.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -238,11 +240,11 @@
     <Content Include="Views\Citas\DetallesCita.cshtml" />
     <Content Include="Views\Pacientes\Index.cshtml" />
     <Content Include="Views\Recetas\Index.cshtml" />
+    <Content Include="Views\Recetas\Previsualizar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Files\Recibos\" />
-    <Folder Include="RecetasFiles\" />
     <Folder Include="Views\Doctores\" />
     <Folder Include="Views\Email\" />
   </ItemGroup>

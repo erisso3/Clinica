@@ -13,8 +13,11 @@ namespace Clinica.Controllers
     public class EmailController : Controller
     {
         // GET: Email
+        [HttpPost]
         public JsonResult EnviarReceta(string correo, string archivo)
         {
+            System.Diagnostics.Debug.WriteLine("correo a enviar " + correo);
+            System.Diagnostics.Debug.WriteLine("archivo a enviar " + archivo);
             bool a  = SendEmailReceta(correo, archivo);
             //https://localhost:44347/Email/EnviarReceta?correo=victoe680@gmail.com&archivo=Victor_tarea1_u2.pdf
             return Json("enviado "+a, JsonRequestBehavior.AllowGet);

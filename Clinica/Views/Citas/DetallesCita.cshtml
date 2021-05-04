@@ -2,6 +2,9 @@
 @{
     ViewBag.Title = "DetallesCita";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int id_cita = 1;
+    string paciente = "Victor";
+    string nombreCompleto = "Victor Manuel Vásquez Poblete";
 }
 <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
 <div class="">
@@ -48,69 +51,79 @@
                 <div class="col-md-12 text-white ">
                     <h3 class="text-center text-black-50">Generar Receta</h3>
                     <div class="mb-3 card card-body">
-                        <h5 class="card-title">Formulario Receta</h5>
-                        <div class="form-row">
-                            <div class="col-md-12 mb-12">
-                                <label for="validationCustom01" class="text-black-50">Observaciones</label>
-                                <input type="text" class="form-control" id="nombre" placeholder="Obserciones" required>
-                            </div>
-                            <div class="col-md-12 mb-12">
-                                <br />
-                                <label for="validationCustom01" class="text-black-50">Instrucciones</label>
-                                <input type="text" class="form-control" id="nombre" placeholder="Instrucciones" required>
-                            </div>
-                            <label for="validationCustom01" class="text-black-50">Medicamentos</label>
-                            <div class="col-md-12 mb-12 bg-secondary">
-                                <br />
-                                <table class="table table-hover text-center" id="dataTable_Medicamentos">
-                                    <thead class="">
-                                        <tr>
-                                            <th class="text-center">
-                                                Nombre del medicamento
-                                            </th>
-                                            <th class="text-center">
-                                                Dosis
-                                            </th>
-                                            <th class="text-center">
-                                                Precio
-                                            </th>
-                                            <th>
-                                                Indicaciones
-                                            </th>
-                                            <th>Agregar</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model)
-                                        {
+                        @using (Html.BeginForm())
+
+                        {
+                            <input type="hidden" name="id_cita" value="@id_cita" />
+                            <input type="hidden" name="paciente" value="@paciente" />
+                            <input type="hidden" name="nombreCompleto" value="@nombreCompleto" />
+
+
+                            <h5 class="card-title">Formulario Receta</h5>
+                            <div class="form-row">
+                                <div class="col-md-12 mb-12">
+                                    <label for="validationCustom01" class="text-black-50">Observaciones</label>
+                                    <textarea class="form-control" id="observacion" name="observacion" placeholder="Obserciones" required ></textarea>
+                                </div>
+                                <div class="col-md-12 mb-12">
+                                    <br />
+                                    <label for="validationCustom01" class="text-black-50">Instrucciones</label>
+                                    <textarea class="form-control" id="indicaciones" name="indicaciones" placeholder="Indicaciones" required></textarea>
+                                </div>
+                                <label for="validationCustom01" class="text-black-50">Medicamentos</label>
+                                <div class="col-md-12 mb-12 bg-secondary">
+                                    <br />
+                                    <table class="table table-hover text-center" id="dataTable_Medicamentos">
+                                        <thead class="">
                                             <tr>
-                                                <td>
-                                                    @item.nombre
-                                                </td>
-                                                <td>
-                                                    @item.dosis
-                                                </td>
-                                                <td>
-                                                    @item.precio
-                                                </td>
-                                                <td>
-                                                    @item.indicaciones
-                                                </td>
-                                                <td><input type="checkbox" /></td>
+                                                <th class="text-center">
+                                                    Nombre del medicamento
+                                                </th>
+                                                <th class="text-center">
+                                                    Dosis
+                                                </th>
+                                                <th class="text-center">
+                                                    Precio
+                                                </th>
+                                                <th>
+                                                    Indicaciones
+                                                </th>
+                                                <th>Agregar</th>
                                             </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div><br /><br />
-                        <button class="btn btn-primary">Generar</button>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @item.nombre
+                                                    </td>
+                                                    <td>
+                                                        @item.dosis
+                                                    </td>
+                                                    <td>
+                                                        @item.precio
+                                                    </td>
+                                                    <td>
+                                                        @item.indicaciones
+                                                    </td>
+                                                    <td><input type="checkbox" name="ids_medicamentos" value="@Json.Encode(item)" /></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div><br /><br />
+                            <button class="btn btn-primary">Generar</button>
+                        }
                     </div>
+
                 </div>
 
             </div>
         </div>
     </div>
-
+</div>
 
 
     @Scripts.Render("~/bundles/jquery")
