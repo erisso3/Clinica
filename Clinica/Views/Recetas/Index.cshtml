@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Clinica.Objects.Receta>
+﻿@model IEnumerable<Clinica.Models.Recetas>
 @{
     ViewBag.Title = "Recetas";
     ViewBag.descripcion = "En este módulo se pueden ver las recetas del paciente seleccionado, con una opción de visualizar el documento";
@@ -36,7 +36,7 @@
                     @item.fecha
                 </td>
                 <td>
-                    <a href="~/Recetas/Visualizar" target="_blank" class="text-white" >
+                    <a href="~/Recetas/Previsualizar?id=@item.id_receta" target="_blank" class="text-white" >
                         <i class="pe-7s-look"></i>
                     </a>
                 </td>
@@ -44,9 +44,9 @@
         }
     </tbody>
 </table>
+
+
 <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
-<script>
-    
-</script>
+
 
 

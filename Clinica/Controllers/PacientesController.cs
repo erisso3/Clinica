@@ -1,4 +1,6 @@
-﻿using Clinica.Objects;
+﻿using Clinica.DAO;
+using Clinica.Models;
+using Clinica.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +11,27 @@ namespace Clinica.Controllers
 {
     public class PacientesController : Controller
     {
+        private DAOPacientes dao = new DAOPacientes();
         // GET: Pacientes
         public ActionResult Index()
         {
-            List<Paciente> pacientes = new List<Paciente>();
-            pacientes.Add(new Paciente("Victor","Vasquez","Poblete","victoe680@gmail.com"));
-            pacientes.Add(new Paciente("Manuel","Iturbe","Flores","mpoblete501@gmail.com"));
-            pacientes.Add(new Paciente("Juan","Lopez","Castro","juan@gmail.com"));
+            List<Pacientes> pacientes = dao.getPacientes();
             ViewBag.estadoPacientes = "mm-active";
             return View(pacientes);
+        }
+        [HttpPost]
+        public ActionResult Eliminar(int id)
+        {
+            bool result = dao.eliminar(id);
+            if (result)
+            {
+                TempData["resultado"] = "Paciente eliminado con éxito";
+            }
+            else
+            {
+                TempData["resultado"] = "Paciente no eliminado";
+            }
+            return RedirectToAction("Index");
         }
     }
 }
