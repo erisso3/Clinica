@@ -75,3 +75,9 @@ INSERT INTO Pacientes(nombre,ape_pat,ape_mat,usuario,password) VALUES('Victor', 
 
 
 /* Install-Package Microsoft.AspNet.WebApi.Cors */
+
+EXEC sp_rename 'Doctores','Usuarios'
+
+ALTER TABLE Usuarios add tipo int NOT NULL DEFAULT(0);
+
+EXEC sp_rename 'dbo.Usuarios.id_doctor','id_usuario','COLUMN';

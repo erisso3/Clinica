@@ -12,11 +12,11 @@ namespace Clinica.Controllers
     [EnableCors (origins: "*", headers:"*",methods:"*" )]
     public class DoctorController : Controller
     {
-        public DAODoctores dao = new DAODoctores();
+        public DAOUsuarios dao = new DAOUsuarios();
         // GET: Doctores
         public JsonResult ListarDoctores()
         {
-            List<Doctores> lista = dao.listarDoctores();
+            List<Usuarios> lista = dao.listarDoctores();
             if (lista != null)
             {
                 return Json(new { lista }, JsonRequestBehavior.AllowGet);

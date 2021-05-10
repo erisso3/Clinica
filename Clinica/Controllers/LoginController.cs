@@ -24,15 +24,16 @@ namespace Clinica.Controllers
         //POST:Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(string usuario, string password)
+        public ActionResult Index(string usu, string pas)
         {
             ContextDb db = new ContextDb();
-            string hashPassword = EncodePassword(password);
-            Doctores doctor = DAODoctores.getDoctor(usuario,hashPassword);
-            if (doctor!=null)
+            string hashPassword = EncodePassword(pas);
+            System.Diagnostics.Debug.WriteLine("Entre al controlador"+usu+" "+hashPassword);
+            Usuarios usuario = DAOUsuarios.getUsuario(usu,hashPassword);
+            if (usuario!=null)
             {
-                doctor.password = null;
-                Session["Doctor"] = doctor;
+                usuario.password = null;
+                Session["Usuario"] = usuario;
                 Session.Timeout = 30;
                 return RedirectToAction("", "Home");
             }
@@ -68,7 +69,7 @@ namespace Clinica.Controllers
 
         public ActionResult LogOut()
         {
-            Session["Doctor"] = null;
+            Session["Usuario"] = null;
             Session.Abandon();
             return RedirectToAction("", "Login");
         }

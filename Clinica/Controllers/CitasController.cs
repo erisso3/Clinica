@@ -30,20 +30,20 @@ namespace Clinica.Controllers
         // GET: Citas
         public ActionResult Index()
         {
-            Doctores doctor = (Doctores)Session["Doctor"];
-            if (doctor == null)
+            Usuarios usuario = (Usuarios)Session["Usuario"];
+            if (usuario == null)
             {
                 return RedirectToAction("LogOut", "Login");
             }
             ViewBag.estadoCitas= "mm-active";
             DAOCitas daoCitas = new DAOCitas();
-            List <CitasDoctorObject> listaCitasPendientes=daoCitas.getCitasPendientes(doctor.id_doctor);
+            List <CitasDoctorObject> listaCitasPendientes=daoCitas.getCitasPendientes(usuario.id_usuario);
             TempData["CitasPendiantes"] = listaCitasPendientes;
-            List<CitasDoctorObject> listaCitasAceptadas = daoCitas.getCitasAceptadas(doctor.id_doctor);
+            List<CitasDoctorObject> listaCitasAceptadas = daoCitas.getCitasAceptadas(usuario.id_usuario);
             TempData["CitasAceptadas"] = listaCitasAceptadas;
-            List<CitasDoctorObject> listaCitasRechazadas = daoCitas.getCitasRechazadas(doctor.id_doctor);
+            List<CitasDoctorObject> listaCitasRechazadas = daoCitas.getCitasRechazadas(usuario.id_usuario);
             TempData["CitasRechazadas"] = listaCitasRechazadas;
-            List<CitasDoctorObject> listaCitasRealizadas = daoCitas.getCitasRealizadas(doctor.id_doctor);
+            List<CitasDoctorObject> listaCitasRealizadas = daoCitas.getCitasRealizadas(usuario.id_usuario);
             TempData["CitasRealizadas"] = listaCitasRealizadas;
             List<Pacientes> listaPacientes = daoPacientes.listarPacientes();
             TempData["listaPacientes"] = listaPacientes;
@@ -56,15 +56,15 @@ namespace Clinica.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult registrarCita(int id_paciente, DateTime fecha, int hora, String observacion)
         {
-            Doctores doctor = (Doctores)Session["Doctor"];
-            if (doctor == null)
+            Usuarios usuario = (Usuarios)Session["Usuario"];
+            if (usuario == null)
             {
                 return RedirectToAction("LogOut", "Login");
             }
             System.Diagnostics.Debug.WriteLine(fecha);
             System.Diagnostics.Debug.WriteLine(hora);
             CitaObject cita = new CitaObject();
-            cita.id_doctor = doctor.id_doctor;
+            cita.id_doctor = usuario.id_usuario;
             cita.id_paciente = id_paciente;
             cita.status = 1;
             cita.fecha = fecha.ToString("yyyy-MM-dd");
@@ -89,7 +89,7 @@ namespace Clinica.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult actualizarStatusCita(int id_cita, int status)
         {
-            Doctores doctor = (Doctores)Session["Doctor"];
+            Usuarios doctor = (Usuarios)Session["Usuario"];
             if (doctor == null)
             {
                 return RedirectToAction("LogOut", "Login");
@@ -110,7 +110,7 @@ namespace Clinica.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult eliminarCita(int id_cita)
         {
-            Doctores doctor = (Doctores)Session["Doctor"];
+            Usuarios doctor = (Usuarios)Session["Usuario"];
             if (doctor == null)
             {
                 return RedirectToAction("LogOut", "Login");
@@ -159,8 +159,8 @@ namespace Clinica.Controllers
 
         public async Task<ActionResult> DetallesCita(int id_cita)
         {
-            Doctores doctor = (Doctores)Session["Doctor"];
-            if (doctor == null)
+            Usuarios usuario = (Usuarios)Session["Usuario"];
+            if (usuario == null)
             {
                 return RedirectToAction("LogOut", "Login");
             }
