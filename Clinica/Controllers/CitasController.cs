@@ -26,6 +26,7 @@ namespace Clinica.Controllers
     {
         private DAOCitas daoCitas = new DAOCitas();
         private DAORecetas daoRecetas = new DAORecetas();
+        private DAOPacientes daoPacientes = new DAOPacientes();
         // GET: Citas
         public ActionResult Index()
         {
@@ -44,8 +45,43 @@ namespace Clinica.Controllers
             TempData["CitasRechazadas"] = listaCitasRechazadas;
             List<CitasDoctorObject> listaCitasRealizadas = daoCitas.getCitasRealizadas(doctor.id_doctor);
             TempData["CitasRealizadas"] = listaCitasRealizadas;
+            List<Pacientes> listaPacientes = daoPacientes.listarPacientes();
+            TempData["listaPacientes"] = listaPacientes;
             return View();
         }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult registrarCita(int id_paciente, DateTime fecha, int hora, String observacion)
+        {
+            Doctores doctor = (Doctores)Session["Doctor"];
+            if (doctor == null)
+            {
+                return RedirectToAction("LogOut", "Login");
+            }
+            System.Diagnostics.Debug.WriteLine(fecha);
+            System.Diagnostics.Debug.WriteLine(hora);
+            CitaObject cita = new CitaObject();
+            cita.id_doctor = doctor.id_doctor;
+            cita.id_paciente = id_paciente;
+            cita.status = 1;
+            cita.fecha = fecha.ToString("yyyy-MM-dd");
+            cita.hora = hora;
+            cita.observacion = observacion;
+            bool bandera = daoCitas.agregar(cita);
+            if (bandera)
+            {
+                System.Diagnostics.Debug.WriteLine("Todo chido");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("No chido");
+            }
+            return RedirectToAction("Index");
+        }
+
 
 
 
@@ -97,6 +133,7 @@ namespace Clinica.Controllers
         [HttpPost]
         public JsonResult AgendarCita([Bind(Include = "id_paciente,id_doctor,fecha,hora,observacion")] CitaObject cita)
         {
+            cita.status = 0;
             bool result = daoCitas.agregar(cita);
             if (result)
             {
@@ -120,10 +157,17 @@ namespace Clinica.Controllers
         }
 
 
-        public async Task<ActionResult> DetallesCita()
+        public async Task<ActionResult> DetallesCita(int id_cita)
         {
+            Doctores doctor = (Doctores)Session["Doctor"];
+            if (doctor == null)
+            {
+                return RedirectToAction("LogOut", "Login");
+            }
+            CitaDetallesObject citaDetalles = daoCitas.getCitaDetalles(id_cita);
+            System.Diagnostics.Debug.WriteLine("Exito: "+citaDetalles);
+            Session["citaDetalles"] = citaDetalles;
             List<Medicamento> medicamentos = new List<Medicamento>();
-
             try
             {
                 using (var client = new HttpClient())
@@ -182,6 +226,8 @@ namespace Clinica.Controllers
                 DateTime date = DateTime.Now;
 
                 Recetas receta = new Recetas();
+                ContextDb db = new ContextDb();
+                Citas cita = db.Citas.ToList().Find(x=>x.id_cita== id_cita);
                 receta.id_cita = id_cita;
                 receta.fecha = date;
                 receta.ruta = date.Date.ToString("ddMMyyyy") + "-" + paciente + "-Receta.pdf";
@@ -193,7 +239,7 @@ namespace Clinica.Controllers
                 string file = Convert.ToBase64String(bytes);
                 System.Diagnostics.Debug.WriteLine("Base64: "+file);
                 receta.documento = file;
-                bool add = daoRecetas.agregar(receta);
+                bool add = daoRecetas.agregar(receta,cita);
                 if (add)
                 {
                     SendEmailReceta(correo, receta.ruta);

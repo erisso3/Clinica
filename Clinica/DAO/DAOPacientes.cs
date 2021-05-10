@@ -17,6 +17,12 @@ namespace Clinica.DAO
             db = new ContextDb();
         }
 
+
+        public List<Pacientes> listarPacientes()
+        {
+            return db.Pacientes.ToList();
+        }
+
         public bool agregar(Pacientes paciente)
         {
             using (var dbContextTransaction = db.Database.BeginTransaction())

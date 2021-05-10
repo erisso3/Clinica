@@ -2,9 +2,11 @@
 @{
     ViewBag.Title = "DetallesCita";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    int id_cita = 1;
-    string paciente = "Victor";
-    string nombreCompleto = "Victor Manuel Vásquez Poblete";
+    Clinica.Objects.CitaDetallesObject citaDetalles =(Clinica.Objects.CitaDetallesObject) Session["citaDetalles"];
+    int id_cita = citaDetalles.id_cita;
+    string paciente = citaDetalles.nombre;
+    string nombreCompleto = citaDetalles.nombre+" "+citaDetalles.ape_pat+" "+citaDetalles.ape_mat;
+    string usuario = citaDetalles.usuario;
 }
 <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
 <div class="">
@@ -36,10 +38,10 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Erick Mitchell Echeverría Celaya</td>
-                                <td>30/04/2020</td>
-                                <td>15:30</td>
-                                <td>Dolor de estomago</td>
+                                <td>@nombreCompleto</td>
+                                <td>@citaDetalles.fecha.ToShortDateString()</td>
+                                <td>@citaDetalles.hora</td>
+                                <td>@citaDetalles.observacion</td>
                             </tr>
                         </tbody>
                     </table>
