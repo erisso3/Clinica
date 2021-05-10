@@ -19,6 +19,22 @@ namespace Clinica.Controllers
             ViewBag.estadoPacientes = "mm-active";
             return View(pacientes);
         }
+
+        [HttpPost]
+        public ActionResult Registrar([Bind(Include = "nombre,ape_pat,ape_mat,usuario,password")] Pacientes paciente)
+        {
+            bool result = dao.agregar(paciente);
+            if (result)
+            {
+                TempData["resultado"] = "Paciente eliminado con éxito";
+            }
+            else
+            {
+                TempData["resultado"] = "Paciente no eliminado";
+            }
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public ActionResult Eliminar(int id)
         {
