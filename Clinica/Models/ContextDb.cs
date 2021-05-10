@@ -13,10 +13,11 @@ namespace Clinica.Models
         }
 
         public virtual DbSet<Citas> Citas { get; set; }
-        public virtual DbSet<Doctores> Doctores { get; set; }
+        public virtual DbSet<Medicamentos> Medicamentos { get; set; }
         public virtual DbSet<Pacientes> Pacientes { get; set; }
         public virtual DbSet<Recetas> Recetas { get; set; }
         public virtual DbSet<Tickets> Tickets { get; set; }
+        public virtual DbSet<Usuarios> Usuarios { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -24,24 +25,16 @@ namespace Clinica.Models
                 .Property(e => e.observacion)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Doctores>()
+            modelBuilder.Entity<Medicamentos>()
                 .Property(e => e.nombre)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Doctores>()
-                .Property(e => e.ape_pat)
+            modelBuilder.Entity<Medicamentos>()
+                .Property(e => e.dosis)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Doctores>()
-                .Property(e => e.ape_mat)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Doctores>()
-                .Property(e => e.usuario)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Doctores>()
-                .Property(e => e.password)
+            modelBuilder.Entity<Medicamentos>()
+                .Property(e => e.indicaciones)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Pacientes>()
@@ -90,6 +83,26 @@ namespace Clinica.Models
 
             modelBuilder.Entity<Tickets>()
                 .Property(e => e.ruta)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Usuarios>()
+                .Property(e => e.nombre)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Usuarios>()
+                .Property(e => e.ape_pat)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Usuarios>()
+                .Property(e => e.ape_mat)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Usuarios>()
+                .Property(e => e.usuario)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Usuarios>()
+                .Property(e => e.password)
                 .IsUnicode(false);
         }
     }

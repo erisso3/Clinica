@@ -6,10 +6,10 @@ namespace Clinica.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Doctores
+    public partial class Usuarios
     {
         [Key]
-        public int id_doctor { get; set; }
+        public int id_usuario { get; set; }
 
         [Required]
         [StringLength(30)]
@@ -30,5 +30,7 @@ namespace Clinica.Models
         [Required]
         [StringLength(64)]
         public string password { get; set; }
+
+        public int tipo { get; set; }
     }
 }

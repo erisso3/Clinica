@@ -1,7 +1,7 @@
 ﻿@{ 
-    Clinica.Models.Doctores doctor =(Clinica.Models.Doctores)Session["Doctor"];
-    String nombre = doctor.nombre + " " + doctor.ape_pat;
-    String usuario = doctor.usuario;
+    Clinica.Models.Usuarios usuario =(Clinica.Models.Usuarios)Session["Usuario"];
+    String nombre = usuario.nombre + " " + usuario.ape_pat;
+    String email = usuario.usuario;
 }
 <!DOCTYPE html>
 <html lang="es">
@@ -85,7 +85,7 @@
                                 </div>
                                 <div class="widget-content-left  ml-3">
                                     <div class="widget-heading">
-                                        Usuario : @usuario
+                                        Usuario : @email
                                     </div>
                                     <div class="widget-subheading">
                                         Doctor : @nombre
