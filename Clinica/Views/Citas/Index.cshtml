@@ -7,6 +7,7 @@
     List<Clinica.Objects.CitasDoctorObject> listaCitasAceptadas = (List<Clinica.Objects.CitasDoctorObject>)TempData["CitasAceptadas"];
     List<Clinica.Objects.CitasDoctorObject> listaCitasRechazadas = (List<Clinica.Objects.CitasDoctorObject>)TempData["CitasRechazadas"];
     List<Clinica.Objects.CitasDoctorObject> listaCitasRealizadas = (List<Clinica.Objects.CitasDoctorObject>)TempData["CitasRealizadas"];
+    List<Clinica.Models.Pacientes> listaPacientes = (List<Clinica.Models.Pacientes>)TempData["listaPacientes"];
 }
 <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
 <div class="">
@@ -35,7 +36,7 @@
     <div class="tab-content">
         <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
             <div class="row">
-                <button class="mb-2 mr-2 btn btn-warning" style="font-size: 25px;" data-toggle="modal" data-target="#registroCita">
+                <button class="mb-2 mr-2 btn btn-warning" style="font-size: 25px;" data-toggle="modal" data-target="#registroCita" onclick="cambiarDatosPaciente()">
                     Registrar Cita
                 </button>
 
@@ -134,7 +135,7 @@
                                         @item.observacion
                                     </td>
                                     <td>
-                                        <a class="mb-2 mr-2 btn btn-info" href="~/Citas/DetallesCita">
+                                        <a class="mb-2 mr-2 btn btn-info" href="~/Citas/DetallesCita?id_cita=@item.id_cita">
                                             Ver
                                         </a>
                                     </td>
@@ -262,49 +263,77 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">REGISTRO DE PACIENTE</h5>
+                <h5 class="modal-title" id="exampleModalLabel">REGISTRO DE CITA</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Action", "Controller", FormMethod.Post, new { htmlAttributes = new { @class = "form-control" } }))
+                @using (Html.BeginForm("registrarCita", "Citas", FormMethod.Post, new { htmlAttributes = new { @class = "form-control" } }))
                 {
+                    @Html.AntiForgeryToken()
                     <div class="form-row">
                         <div class="col-md-12 mb-12">
+                            <label for="validationCustom01">Usuario</label><br />
+                            <select id="paciente" class="form-control" onchange="cambiarDatosPaciente()">
+                                @foreach (var item in listaPacientes)
+                                {
+                                    if (!item.usuario.IsEmpty())
+                                    {
+                                        <option value="@Json.Encode(item)">@item.usuario</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@Json.Encode(item)">@item.nombre @item.ape_pat @item.ape_pat</option>
+                                    }
+
+                                }
+                            </select>
+                        </div>
+                        <input type="hidden" class="form-control" id="id_paciente" name="id_paciente">
+                        <div class="col-md-12 mb-12">
                             <label for="validationCustom01">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" placeholder="nombre" required>
+                            <input type="text" class="form-control" id="nombre" placeholder="nombre" disabled>
                         </div>
                         <div class="col-md-12 mb-12">
                             <br />
                             <label for="validationCustom01">Apellido paterno</label>
-                            <input type="text" class="form-control" id="nombre" placeholder="apellido parteno" required>
+                            <input type="text" class="form-control" id="ape_pat" placeholder="apellido parteno" disabled>
                         </div>
                         <div class="col-md-12 mb-12">
                             <br />
                             <label for="validationCustom01">Apellido materno</label>
-                            <input type="text" class="form-control" id="nombre" placeholder="apellido materno" required>
+                            <input type="text" class="form-control" id="ape_mat" placeholder="apellido materno" disabled>
                         </div>
                         <div class="col-md-12 mb-12">
                             <br />
                             <label for="validationCustom01">Fecha</label>
-                            <input type="date" class="form-control" id="nombre" required>
+                            <input type="date" class="form-control" id="fecha" name="fecha" required>
                         </div>
                         <div class="col-md-12 mb-12">
                             <br />
-                            <label for="validationCustom01">Hora</label>
-                            <input type="time" class="form-control" id="nombre" required>
+                            <label for="validationCustom01">Hora</label><br />
+                            <select class="form-control" id="hora" name="hora">
+                                <option value="9">9:00 A.M.</option>
+                                <option value="10">10:00 A.M.</option>
+                                <option value="11">11:00 A.M.</option>
+                                <option value="12">12:00 P.M.</option>
+                                <option value="13">1:00 P.M.</option>
+                                <option value="14">2:00 P.M.</option>
+                                <option value="15">3:00 A.M.</option>
+                                <option value="16">4:00 A.M.</option>
+                            </select>
                         </div>
                         <div class="col-md-12 mb-12">
                             <br />
                             <label for="validationCustom01">Observación</label>
-                            <input type="text" class="form-control" id="nombre" placeholder="Observación" required>
+                            <input type="text" class="form-control" id="observacion" name="observacion" placeholder="Observación" required>
                         </div>
                     </div>
                     <br />
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary">Enviar</button>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
                     </div>
                 }
             </div>
@@ -345,8 +374,6 @@
 <!--Modal: modalConfirmDelete-->
 
 
-<!-- Button trigger modal-->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPush">Launch modal</button>
 
 <!--Modal: modalPush-->
 <div class="modal fade" id="modalPush" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -383,10 +410,6 @@
   </div>
 </div>
 <!--Modal: modalPush-->
-
-
-
-
 
 
 @Scripts.Render("~/bundles/jquery")
@@ -436,6 +459,15 @@
 
     function OpenModalDelete(valor) {
         document.getElementById("id_citaE").value = valor;
+    }
+
+    function cambiarDatosPaciente() {
+        var datos = JSON.parse(document.getElementById("paciente").value);
+        document.getElementById("id_paciente").value = datos.id_paciente;
+        document.getElementById("nombre").value = datos.nombre;
+        document.getElementById("ape_pat").value = datos.ape_pat;
+        document.getElementById("ape_mat").value = datos.ape_mat;
+        console.log(datos);
     }
 </script>
 

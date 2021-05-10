@@ -23,7 +23,7 @@ namespace Clinica.DAO
             Citas cita = new Citas();
             cita.id_paciente = citaObject.id_paciente;
             cita.id_doctor = citaObject.id_doctor;
-            cita.status = 0;
+            cita.status = citaObject.status;
             System.Diagnostics.Debug.WriteLine("FECHA: "+citaObject.fecha);
             DateTime DateObject = DateTime.ParseExact(citaObject.fecha, "yyyy-MM-dd", null);
             TimeSpan time = new TimeSpan(citaObject.hora, 0, 0);
@@ -49,6 +49,13 @@ namespace Clinica.DAO
             }
             return false;
         }
+
+        public CitaDetallesObject getCitaDetalles(int id_cita)
+        {
+            string sql = "select c.id_cita,c.id_paciente, p.nombre, p.ape_pat, ape_mat, p.usuario, c.fecha, c.hora, c.observacion from citas c, Pacientes p where c.id_paciente=p.id_paciente and c.id_cita= @a ;";
+            return db.Database.SqlQuery<CitaDetallesObject>(sql, new SqlParameter("@a", id_cita)).ToList().Last();
+        }
+
 
         public List<CitaObject> getCitasPaciente(int id)
         {

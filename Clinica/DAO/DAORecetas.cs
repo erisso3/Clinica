@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace Clinica.DAO
 {
@@ -16,13 +17,15 @@ namespace Clinica.DAO
             db = new ContextDb();
         }
 
-        public bool agregar(Recetas receta)
+        public bool agregar(Recetas receta, Citas cita)
         {
             
             using (var dbContextTransaction = db.Database.BeginTransaction())
             {
                 try
                 {
+                    cita.status = 3;
+                    db.Entry(cita).State = EntityState.Modified;
                     db.Recetas.Add(receta);
                     db.SaveChanges();
                     dbContextTransaction.Commit();
