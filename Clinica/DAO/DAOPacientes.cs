@@ -43,6 +43,27 @@ namespace Clinica.DAO
             }
             return false;
         }
+        public bool editar(Pacientes paciente)
+        {
+            using (var dbContextTransaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.Entry(paciente).State = EntityState.Modified;
+                    db.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    //hacemos rollback si hay excepción
+                    dbContextTransaction.Rollback();
+
+                }
+            }
+            return false;
+        }
+
 
         public bool eliminar(int id)
         {

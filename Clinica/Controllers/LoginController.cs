@@ -66,6 +66,18 @@ namespace Clinica.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult EditarMovil([Bind(Include = "id_paciente,nombre,ape_pat,ape_mat,usuario,password")] Pacientes paciente)
+        {
+            bool result = false;
+            if (paciente != null)
+            {
+                result = daoPacientes.editar(paciente);
+                return Json(new { result }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult LogOut()
         {
             Session["Doctor"] = null;
