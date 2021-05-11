@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Clinica.Objects.TicketObject>
+@{
+    ViewBag.Title = "INICIO";
+    Layout = "~/Views/Shared/_Layout_Asistente.cshtml";
+}
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <div class="row">
+        <div class="col-md-12 text-white bg-primary">
+            <h3 class="text-center">Citas Pendientes</h3>
+            <table class="table table-hover text-center" id="dataTable_Tickets">
+                <thead class="">
+                    <tr>
+                        <th class="text-center">
+                            Nombre del Doctor
+                        </th>
+                        <th class="text-center">
+                            Email del doctor
+                        </th>
+                        <th class="text-center">
+                            Nombre de paciente
+                        </th>
+                        <th>
+                            Fecha
+                        </th>
+                        <th>
+                            Total
+                        </th>
+                        <th class="text-center">Aceptar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.nombreDoctor
+                            </td>
+                            <td>
+                                @item.usuarioDoctor
+                            </td>
+                            <td>
+                                @item.nombrePaciente
+                            </td>
+                            <td>
+                                @item.fecha.ToShortDateString()
+                            </td>
+                            <td>
+                                @item.total
+                            </td>
+                            <td>
+                                Ver
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    <script>
+        $('#dataTable_Tickets').DataTable({
+            "destroy": false,
+            pageLength: 7,
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
+            lengthMenu: [[5, 10, 15], [5, 10, 15]]
+        });
+    </script>
+

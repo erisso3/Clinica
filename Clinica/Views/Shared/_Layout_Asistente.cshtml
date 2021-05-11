@@ -1,5 +1,6 @@
-﻿@{ 
-    Clinica.Models.Usuarios usuario =(Clinica.Models.Usuarios)Session["Usuario"];
+﻿
+@{
+    Clinica.Models.Usuarios usuario = (Clinica.Models.Usuarios)Session["Usuario"];
     String nombre = usuario.nombre + " " + usuario.ape_pat;
     String email = usuario.usuario;
 }
@@ -91,7 +92,7 @@
                                         Usuario : @email
                                     </div>
                                     <div class="widget-subheading">
-                                        Doctor : @nombre
+                                        Asistente : @nombre
                                     </div>
                                 </div>
                             </div>
@@ -135,41 +136,16 @@
                         </button>
                     </span>
                 </div>    <div class="scrollbar-sidebar">
-                    @{ 
-                        string menu = ViewBag.estadoMenu;
-                        string citas = ViewBag.estadoCitas;
-                        string pacientes = ViewBag.estadoPacientes;
-                        string Medicamentos = ViewBag.estadoMedicamentos;
+                    @{
+                        string menu = ViewBag.estadoMenuAsistente;
                     }
                     <div class="app-sidebar__inner">
                         <ul class="vertical-nav-menu">
                             <li class="app-sidebar__heading">MENÚ</li>
                             <li>
-                                <a href="~/Home/index" class="@menu">
+                                <a href="~/Asistente/Index" class="@menu">
                                     <i class="metismenu-icon pe-7s-home"></i>
                                     Menú
-                                </a>
-                            </li>
-                            <li class="app-sidebar__heading">CITAS</li>
-                            <li>
-                                <a href="~/Citas/Index" class="@citas">
-                                    <i class="metismenu-icon pe-7s-note2"></i>
-                                    Ver citas
-                                </a>
-                            </li>
-                            <li class="app-sidebar__heading">PACIENTES</li>
-                            <li>
-                                <a href="~/Pacientes/Index" class="@pacientes">
-                                    <i class="metismenu-icon pe-7s-diamond"></i>
-
-                                    Ver pacientes
-                                </a>
-                            </li>
-                            <li class="app-sidebar__heading">MEDICAMENTOS</li>
-                            <li>
-                                <a href="~/Medicamentos/Index" class="@Medicamentos">
-                                    <i class="metismenu-icon pe-7s-box2">
-                                    </i>Ver medicamentos
                                 </a>
                             </li>
                         </ul>
@@ -205,7 +181,7 @@
                         </footer>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
