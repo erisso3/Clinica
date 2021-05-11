@@ -35,7 +35,15 @@ namespace Clinica.Controllers
                 usuario.password = null;
                 Session["Usuario"] = usuario;
                 Session.Timeout = 30;
-                return RedirectToAction("", "Home");
+                if (usuario.tipo==0)
+                {
+                    return RedirectToAction("", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("", "Asistente");
+                }
+                
             }
             ViewBag.Mensaje = "El Correo y/o contraseña son incorrecta";
             return View();

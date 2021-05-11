@@ -144,6 +144,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AsistenteController.cs" />
     <Compile Include="Controllers\CitasController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Controllers\PacientesController.cs" />
     <Compile Include="Controllers\RecetasController.cs" />
     <Compile Include="DAO\DAOCitas.cs" />
+    <Compile Include="DAO\DAOTicket.cs" />
     <Compile Include="DAO\DAOUsuarios.cs" />
     <Compile Include="DAO\DAOLogin.cs" />
     <Compile Include="DAO\DAOPacientes.cs" />
@@ -173,6 +175,7 @@
     <Compile Include="Objects\Medicamento.cs" />
     <Compile Include="Objects\Paciente.cs" />
     <Compile Include="Objects\Receta.cs" />
+    <Compile Include="Objects\TicketObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +247,8 @@
     <Content Include="Views\Pacientes\Index.cshtml" />
     <Content Include="Views\Recetas\Index.cshtml" />
     <Content Include="Views\Recetas\Previsualizar.cshtml" />
+    <Content Include="Views\Shared\_Layout_Asistente.cshtml" />
+    <Content Include="Views\Asistente\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
