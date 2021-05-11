@@ -199,28 +199,29 @@ namespace Clinica.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> DetallesCita(int id_cita, string observacion, string indicaciones, string [] ids_medicamentos, string paciente, string nombreCompleto)
+        public async Task<ActionResult> DetallesCita(int id_cita, string observacion, string indicaciones, string [] ids_medicamentos, string paciente, string nombreCompleto, float cobro)
         {
             string correo = "victoe680@gmail.com";
             List<Medicamento> medicamentos = new List<Medicamento>();
             System.Diagnostics.Debug.WriteLine("id_cita: " + id_cita);
             System.Diagnostics.Debug.WriteLine("observacion: " + observacion);
             System.Diagnostics.Debug.WriteLine("indicaciones: " + indicaciones);
+            System.Diagnostics.Debug.WriteLine("Cobro: " + cobro);
 
             string ids = "";
             List<Medicamento> med = new List<Medicamento>();
             Medicamento aux;
-            foreach (var item in ids_medicamentos)
+            if(ids_medicamentos != null)
             {
-                aux = JsonConvert.DeserializeObject<Medicamento>(item);
-                med.Add(aux);
-                ids = ids + "," + aux.id.ToString();
+                foreach (var item in ids_medicamentos)
+                {
+                    aux = JsonConvert.DeserializeObject<Medicamento>(item);
+                    med.Add(aux);
+                    ids = ids + "," + aux.id.ToString();
+                }
             }
-
-            
-
+            //crearTicket(paciente, nombreCompleto, cobro);
             bool result = crearReceta(med, observacion, indicaciones, paciente, nombreCompleto);
-
             if (result)
             {
                 DateTime date = DateTime.Now;
@@ -246,7 +247,7 @@ namespace Clinica.Controllers
                     return RedirectToAction("Index");
                 }
             }
-
+            
             try
             {
                 using (var client = new HttpClient())
@@ -273,6 +274,8 @@ namespace Clinica.Controllers
             {
                 System.Diagnostics.Debug.WriteLine("No Exito");
             }
+            
+
             return View(medicamentos);
         }
 
@@ -411,6 +414,122 @@ namespace Clinica.Controllers
                 return false;
             }
         }
+
+        public bool crearTicket(string paciente, string nombreCompleto,float cobro)
+        {
+            try
+            {
+                Document doc = new Document(PageSize.LETTER);
+                // Indicamos donde vamos a guardar el documento
+                string path = Server.MapPath("~/Files/Recibos/");
+
+                DateTime date = DateTime.Now;
+                string nombreArchivo = date.Date.ToString("ddMMyyyy") + "-" + paciente + "-Recibo.pdf";
+                System.Diagnostics.Debug.WriteLine("file " + nombreArchivo);
+
+                System.Diagnostics.Debug.WriteLine("path: " + path);
+                PdfWriter writer = PdfWriter.GetInstance(doc,
+                                            new FileStream(path + nombreArchivo, FileMode.Create));
+
+                // Le colocamos el título y el autor
+                // **Nota: Esto no será visible en el documento
+                doc.AddTitle("CLINICA MITCHELL");
+                doc.AddCreator("Dr. Erick Echeverría");
+
+                // Abrimos el archivo
+                doc.Open();
+
+                string pathImagen = Server.MapPath("~/Imagenes/");
+                iTextSharp.text.Image image1 = iTextSharp.text.Image.GetInstance(pathImagen + "logo.png");
+                //image1.ScalePercent(50f);
+                float percentage = 0.0f;
+                percentage = 150 / image1.Width;
+                image1.ScalePercent(percentage * 50);
+                //image1.Alignment = Element.ALIGN_LEFT;
+                //image1.Top= 1;
+                image1.Left = 0;
+                doc.Add(image1);
+
+                iTextSharp.text.Image imageFondo = iTextSharp.text.Image.GetInstance(pathImagen + "logoSalleFondo.png");
+                imageFondo.Alignment = iTextSharp.text.Image.UNDERLYING;
+                float percentage2 = 150 / imageFondo.Width;
+                imageFondo.ScalePercent(percentage2 * 190);
+                imageFondo.SetAbsolutePosition(170, 370);
+                doc.Add(imageFondo);
+
+
+                iTextSharp.text.Font _standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+
+                // Escribimos el encabezamiento en el documento
+                iTextSharp.text.Font fontTitle = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.TIMES_ROMAN, 14, iTextSharp.text.Font.NORMAL, BaseColor.BLUE);
+                iTextSharp.text.Font fontSub = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.TIMES_ROMAN, 11, iTextSharp.text.Font.NORMAL, BaseColor.DARK_GRAY);
+                Paragraph medico = new Paragraph("Dr. Erick Mitchell Echeverría Celaya", fontTitle);
+                Paragraph clinica = new Paragraph("Clinica \"Mitchell\"    -    Cédula profesional. 901014585", fontSub);
+                clinica.Font.SetStyle(Font.UNDERLINE);
+                medico.Alignment = Element.ALIGN_CENTER;
+                clinica.Alignment = Element.ALIGN_CENTER;
+
+                doc.Add(medico);
+                doc.Add(clinica);
+
+
+                doc.Add(Chunk.NEWLINE);
+                iTextSharp.text.Font fontPaciente = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.COURIER, 11, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+                Paragraph datosPaciente = new Paragraph("Paciente: " + nombreCompleto + "         Edad: 22        Fecha: " + date.Date.ToString("dd/MM/yyyy"), fontPaciente);
+                doc.Add(datosPaciente);
+                doc.Add(Chunk.NEWLINE);
+
+                iTextSharp.text.Font fontDescripcion = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.COURIER, 11, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+                Paragraph descripcion = new Paragraph("Cobro de los honorarios del doctor por la cita realizada", fontDescripcion);
+                doc.Add(descripcion);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                // Creamos una tabla que contendrá el nombre, apellido y país
+                // de nuestros visitante.
+                PdfPTable tblPrueba = new PdfPTable(1);
+                tblPrueba.WidthPercentage = 100;
+
+                // Configuramos el título de las columnas de la tabla
+                PdfPCell clNombre = new PdfPCell(new Phrase("Total", _standardFont));
+                clNombre.BorderWidth = 0;
+                clNombre.FixedHeight = 17;
+                clNombre.BorderWidthBottom = 0.75f;
+
+                PdfPCell clDosis = new PdfPCell(new Phrase("$"+cobro.ToString()+".00 pesos", _standardFont));
+                clDosis.BorderWidth = 0;
+                clDosis.FixedHeight = 25;
+
+                // Añadimos las celdas a la tabla
+                tblPrueba.AddCell(clNombre);
+                tblPrueba.AddCell(clDosis);
+
+                doc.Add(tblPrueba);
+
+                doc.Close();
+                writer.Close();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public bool SendEmailReceta(string correoDestino, string nameArchivo)
         {
             string rutaCompartida = "\\\\127.0.0.1\\Users\\Public\\";
