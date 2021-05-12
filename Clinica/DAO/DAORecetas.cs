@@ -34,6 +34,7 @@ namespace Clinica.DAO
                 catch (Exception ex)
                 {
                     //hacemos rollback si hay excepción
+                    System.Diagnostics.Debug.WriteLine("Error en el DAORecetas");
                     dbContextTransaction.Rollback();
 
                 }

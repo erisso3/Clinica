@@ -12,6 +12,6 @@ namespace Clinica.Objects
         public string usuarioDoctor { get; set; }
         public string nombrePaciente { get; set; }
         public DateTime fecha { get; set; }
-        public float total { get; set; }
+        public double total { get; set; }
     }
 }

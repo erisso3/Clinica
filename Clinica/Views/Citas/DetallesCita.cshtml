@@ -6,10 +6,12 @@
     int id_cita = citaDetalles.id_cita;
     string paciente = citaDetalles.nombre;
     string nombreCompleto = citaDetalles.nombre+" "+citaDetalles.ape_pat+" "+citaDetalles.ape_mat;
-    string usuario = citaDetalles.usuario;
+    string correo = citaDetalles.usuario;
+    string error = (string) Session["Error"];
 }
 <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
 <div class="">
+    <h1>@error</h1>
     <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
         <li class="nav-item">
             <a role="tab" class="nav-link active" id="tab-0" data-toggle="tab" href="#tab-content-0">
@@ -59,6 +61,7 @@
                             <input type="hidden" name="id_cita" value="@id_cita" />
                             <input type="hidden" name="paciente" value="@paciente" />
                             <input type="hidden" name="nombreCompleto" value="@nombreCompleto" />
+                            <input type="hidden" name="correo" value="@correo" />
 
 
                             <h5 class="card-title">Formulario Receta</h5>
@@ -121,7 +124,7 @@
                                     </table>
                                 </div>
                             </div><br /><br />
-                            <button class="btn btn-primary">Generar</button>
+                            <button type="submit" class="btn btn-primary">Generar</button>
                         }
                     </div>
 

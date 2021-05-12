@@ -35,12 +35,18 @@ namespace Clinica.DAO
                 }
                 catch (Exception ex)
                 {
+                    System.Diagnostics.Debug.WriteLine("Error en el DAOTickect");
                     //hacemos rollback si hay excepción
                     dbContextTransaction.Rollback();
 
                 }
             }
             return false;
+        }
+
+        public Tickets getTickect(int id)
+        {
+            return db.Tickets.Find(id);
         }
     }
 }
