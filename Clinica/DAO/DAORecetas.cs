@@ -25,7 +25,7 @@ namespace Clinica.DAO
                 try
                 {
                     cita.status = 3;
-                    //db.Entry(cita).State = EntityState.Modified;
+                    db.Entry(cita).State = EntityState.Modified;
                     db.Recetas.Add(receta);
                     db.SaveChanges();
                     dbContextTransaction.Commit();

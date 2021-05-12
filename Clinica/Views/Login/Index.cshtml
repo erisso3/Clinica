@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>JSP Page</title>
 </head>
-<link href="~/Content/css/Style_login.css" rel="stylesheet"></head>
+<link href="~/Content/css/Style_login.css" rel="stylesheet">
 <body>
 
     <div class="container">
@@ -22,7 +22,7 @@
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <input name="usu" type="text" placeholder="Usuario" />
+            <input name="usu" type="text" value="@ViewBag.usua" placeholder="Usuario" />
             <input name="pas" type="password" placeholder="Contraseña" />
             <button type="submit">Iniciar sesión</button>
             if (ViewBag.Mensaje != null)

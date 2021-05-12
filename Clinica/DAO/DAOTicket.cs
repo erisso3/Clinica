@@ -20,5 +20,27 @@ namespace Clinica.DAO
             string sql = "Select t.id_ticket, u.nombre+' '+u.ape_pat+' '+u.ape_mat as nombreDoctor,u.usuario as usuarioDoctor, p.nombre+' '+p.ape_pat+' '+p.ape_mat as nombrePaciente, t.fecha,t.total from Tickets t, Citas c, Pacientes p, Usuarios u where t.id_cita=c.id_cita and c.id_paciente=p.id_paciente and c.id_doctor=u.id_usuario ;";
             return db.Database.SqlQuery<TicketObject>(sql).ToList();
         }
+
+        public bool agregar(Tickets ticket)
+        {
+
+            using (var dbContextTransaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.Tickets.Add(ticket);
+                    db.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    //hacemos rollback si hay excepción
+                    dbContextTransaction.Rollback();
+
+                }
+            }
+            return false;
+        }
     }
 }

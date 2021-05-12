@@ -27,6 +27,7 @@ namespace Clinica.Controllers
         private DAOCitas daoCitas = new DAOCitas();
         private DAORecetas daoRecetas = new DAORecetas();
         private DAOPacientes daoPacientes = new DAOPacientes();
+        private DAOTicket daoTicket = new DAOTicket();
         // GET: Citas
         public ActionResult Index()
         {
@@ -220,13 +221,15 @@ namespace Clinica.Controllers
                     ids = ids + "," + aux.id.ToString();
                 }
             }
-            //crearTicket(paciente, nombreCompleto, cobro);
+            bool ticketResult = crearTicket(paciente, nombreCompleto, cobro);
             bool result = crearReceta(med, observacion, indicaciones, paciente, nombreCompleto);
-            if (result)
+            if (result && ticketResult)
             {
                 DateTime date = DateTime.Now;
 
                 Recetas receta = new Recetas();
+                Tickets ticket = new Tickets();
+
                 ContextDb db = new ContextDb();
                 Citas cita = db.Citas.ToList().Find(x=>x.id_cita== id_cita);
                 receta.id_cita = id_cita;
@@ -238,10 +241,21 @@ namespace Clinica.Controllers
                 string path = Server.MapPath("~/Files/Recetas/" + receta.ruta);
                 Byte[] bytes = System.IO.File.ReadAllBytes(path);
                 string file = Convert.ToBase64String(bytes);
-                System.Diagnostics.Debug.WriteLine("Base64: "+file);
+                //System.Diagnostics.Debug.WriteLine("Base64: "+file);
                 receta.documento = file;
+
+                string pathTicket = Server.MapPath("~/Files/Recibos/" + date.Date.ToString("ddMMyyyy") + "-" + paciente + "-Recibo.pdf");
+                Byte[] bytesTicket = System.IO.File.ReadAllBytes(pathTicket);
+                ticket.id_cita = id_cita;
+                ticket.documento = Convert.ToBase64String(bytesTicket);
+                ticket.ruta = date.Date.ToString("ddMMyyyy") + "-" + paciente + "-Recibo.pdf";
+                ticket.fecha = date;
+                ticket.total = cobro;
+
                 bool add = daoRecetas.agregar(receta,cita);
-                if (add)
+                bool addTicket = daoTicket.agregar(ticket);
+
+                if (add && addTicket)
                 {
                     SendEmailReceta(correo, receta.ruta);
                     return RedirectToAction("Index");
