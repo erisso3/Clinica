@@ -46,6 +46,7 @@ namespace Clinica.Controllers
                 
             }
             ViewBag.Mensaje = "El Correo y/o contraseña son incorrecta";
+            ViewBag.usua = usu;
             return View();
         }
 
