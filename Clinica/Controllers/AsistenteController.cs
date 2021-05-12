@@ -24,5 +24,15 @@ namespace Clinica.Controllers
             List<TicketObject> tickets = dao.getTickets();
             return View(tickets);
         }
+
+
+        public ActionResult Previsualizar(int id)
+        {
+            System.Diagnostics.Debug.WriteLine("Entre a previsualizar");
+            Tickets tickets = dao.getTickect(id);
+            ViewData["doc"] = tickets.documento;
+            return View();
+        }
+
     }
 }

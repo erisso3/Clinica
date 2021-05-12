@@ -200,15 +200,14 @@ namespace Clinica.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> DetallesCita(int id_cita, string observacion, string indicaciones, string [] ids_medicamentos, string paciente, string nombreCompleto, float cobro)
+        public async Task<ActionResult> DetallesCita(int id_cita, string observacion, string indicaciones, string [] ids_medicamentos, string paciente, string nombreCompleto, float cobro, string correo)
         {
-            string correo = "victoe680@gmail.com";
             List<Medicamento> medicamentos = new List<Medicamento>();
             System.Diagnostics.Debug.WriteLine("id_cita: " + id_cita);
             System.Diagnostics.Debug.WriteLine("observacion: " + observacion);
             System.Diagnostics.Debug.WriteLine("indicaciones: " + indicaciones);
             System.Diagnostics.Debug.WriteLine("Cobro: " + cobro);
-
+            ViewBag.Error = "Entre al post detalles";
             string ids = "";
             List<Medicamento> med = new List<Medicamento>();
             Medicamento aux;
@@ -221,10 +220,15 @@ namespace Clinica.Controllers
                     ids = ids + "," + aux.id.ToString();
                 }
             }
+            ViewBag.Error = "Antes de crear ticket";
             bool ticketResult = crearTicket(paciente, nombreCompleto, cobro);
+            ViewBag.Error = "Despues de crear ticket";
+            ViewBag.Error = "Antes de crear receta";
             bool result = crearReceta(med, observacion, indicaciones, paciente, nombreCompleto);
+            ViewBag.Error = "Despues de crear receta";
             if (result && ticketResult)
             {
+                ViewBag.Error = "Antes de generar archivo";
                 DateTime date = DateTime.Now;
 
                 Recetas receta = new Recetas();
@@ -251,10 +255,10 @@ namespace Clinica.Controllers
                 ticket.ruta = date.Date.ToString("ddMMyyyy") + "-" + paciente + "-Recibo.pdf";
                 ticket.fecha = date;
                 ticket.total = cobro;
-
+                ViewBag.Error = "Antes de agregar receta a la base de datos";
                 bool add = daoRecetas.agregar(receta,cita);
+                ViewBag.Error = "Antes de generar ticket a la base de datos";
                 bool addTicket = daoTicket.agregar(ticket);
-
                 if (add && addTicket)
                 {
                     SendEmailReceta(correo, receta.ruta);
@@ -354,7 +358,7 @@ namespace Clinica.Controllers
 
                 doc.Add(Chunk.NEWLINE);
                 iTextSharp.text.Font fontPaciente = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.COURIER, 11, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
-                Paragraph datosPaciente = new Paragraph("Paciente: " + nombreCompleto + "         Edad: 22        Fecha: " + date.Date.ToString("dd/MM/yyyy"), fontPaciente);
+                Paragraph datosPaciente = new Paragraph("Paciente: " + nombreCompleto + "                             Fecha: " + date.Date.ToString("dd/MM/yyyy"), fontPaciente);
                 doc.Add(datosPaciente);
                 doc.Add(Chunk.NEWLINE);
 
@@ -425,6 +429,7 @@ namespace Clinica.Controllers
             }
             catch (Exception ex)
             {
+                Session["Error"] = "Error en generar el receta";
                 return false;
             }
         }
@@ -442,9 +447,10 @@ namespace Clinica.Controllers
                 System.Diagnostics.Debug.WriteLine("file " + nombreArchivo);
 
                 System.Diagnostics.Debug.WriteLine("path: " + path);
+                Session["Error"] = "Error en generar el tickect"+path;
                 PdfWriter writer = PdfWriter.GetInstance(doc,
                                             new FileStream(path + nombreArchivo, FileMode.Create));
-
+                Session["Error"] = "Error en generar el tickect : despues de crear archivo";
                 // Le colocamos el título y el autor
                 // **Nota: Esto no será visible en el documento
                 doc.AddTitle("CLINICA MITCHELL");
@@ -489,7 +495,7 @@ namespace Clinica.Controllers
 
                 doc.Add(Chunk.NEWLINE);
                 iTextSharp.text.Font fontPaciente = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.COURIER, 11, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
-                Paragraph datosPaciente = new Paragraph("Paciente: " + nombreCompleto + "         Edad: 22        Fecha: " + date.Date.ToString("dd/MM/yyyy"), fontPaciente);
+                Paragraph datosPaciente = new Paragraph("Paciente: " + nombreCompleto + "                            Fecha: " + date.Date.ToString("dd/MM/yyyy"), fontPaciente);
                 doc.Add(datosPaciente);
                 doc.Add(Chunk.NEWLINE);
 
@@ -532,7 +538,7 @@ namespace Clinica.Controllers
                 tblPrueba.AddCell(clDosis);
 
                 doc.Add(tblPrueba);
-
+                Session["Error"] = "Error en generar el tickect : antes de acabar de escribir";
                 doc.Close();
                 writer.Close();
 
@@ -540,6 +546,8 @@ namespace Clinica.Controllers
             }
             catch (Exception ex)
             {
+
+                throw; 
                 return false;
             }
         }

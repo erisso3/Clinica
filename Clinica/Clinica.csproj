@@ -213,7 +213,6 @@
     <Content Include="fonts\Pe-icon-7-stroke.ttf" />
     <Content Include="fonts\Pe-icon-7-stroke.woff" />
     <Content Include="Files\Recetas\Victor_tarea1_u2.pdf" />
-    <Content Include="Files\Recetas\prueba.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -249,6 +248,7 @@
     <Content Include="Views\Recetas\Previsualizar.cshtml" />
     <Content Include="Views\Shared\_Layout_Asistente.cshtml" />
     <Content Include="Views\Asistente\Index.cshtml" />
+    <Content Include="Views\Asistente\Previsualizar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
