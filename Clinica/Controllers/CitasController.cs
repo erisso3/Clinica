@@ -221,12 +221,12 @@ namespace Clinica.Controllers
                 }
             }
             ViewBag.Error = "Antes de crear ticket";
-            //bool ticketResult = crearTicket(paciente, nombreCompleto, cobro);
+            bool ticketResult = crearTicket(paciente, nombreCompleto, cobro);
             ViewBag.Error = "Despues de crear ticket";
             ViewBag.Error = "Antes de crear receta";
             bool result = crearReceta(med, observacion, indicaciones, paciente, nombreCompleto);
             ViewBag.Error = "Despues de crear receta";
-            /*
+            
             if (result && ticketResult)
             {
                 ViewBag.Error = "Antes de generar archivo";
@@ -266,7 +266,7 @@ namespace Clinica.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            */
+            
             
             try
             {
@@ -306,12 +306,11 @@ namespace Clinica.Controllers
             {
                 Document doc = new Document(PageSize.LETTER);
                 // Indicamos donde vamos a guardar el documento
-                //string path = Server.MapPath("~/Files/Recetas/");
                 DateTime date = DateTime.Now;
+                string path = Server.MapPath("~/Files/Recetas/") + date.Date.ToString("ddMMyyyy") + "-" + paciente + "-Receta.pdf";
+                
                 string nombreArchivo = date.Date.ToString("ddMMyyyy") + "-" + paciente + "-Receta.pdf";
-                System.Diagnostics.Debug.WriteLine("file " + nombreArchivo);
-                string path = Path.GetTempPath() + date.Date.ToString("ddMMyyyy") + "-" + paciente + "-Receta.pdf";
-
+                
                 PdfWriter writer = PdfWriter.GetInstance(doc,
                                             new FileStream(path , FileMode.Create));
                 System.Diagnostics.Debug.WriteLine("wroter: ");
@@ -425,7 +424,6 @@ namespace Clinica.Controllers
 
                 doc.Close();
                 writer.Close();
-                SendEmailReceta("victoe680@gmail.com", path);
 
                 return true;
             }
@@ -442,8 +440,7 @@ namespace Clinica.Controllers
             {
                 Document doc = new Document(PageSize.LETTER);
                 // Indicamos donde vamos a guardar el documento
-                //string path = Server.MapPath("~/Files/Recibos/");
-                string path = Path.GetTempPath();
+                string path = Server.MapPath("~/Files/Recibos/");
                 DateTime date = DateTime.Now;
                 string nombreArchivo = date.Date.ToString("ddMMyyyy") + "-" + paciente + "-Recibo.pdf";
                 System.Diagnostics.Debug.WriteLine("file " + nombreArchivo);
@@ -580,12 +577,12 @@ namespace Clinica.Controllers
 
                 Mensaje.To.Add(new MailAddress(correoDestino));
 
-                //string path = Server.MapPath("~/Files/Recetas/" + nameArchivo);
+                string path = Server.MapPath("~/Files/Recetas/" + nameArchivo);
                 //System.Diagnostics.Debug.WriteLine("path file " + path);
 
                 //System.IO.File.Copy(path, rutaCompartida + nameArchivo);
 
-                Mensaje.Attachments.Add(new Attachment(nameArchivo));
+                Mensaje.Attachments.Add(new Attachment(path));
                 Mensaje.From = fromAddress;
                 Mensaje.Subject = subject;
                 AlternateView alternateView = AlternateView.CreateAlternateViewFromString(body, Encoding.UTF8, MediaTypeNames.Text.Html);
