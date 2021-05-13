@@ -15,16 +15,10 @@ using Clinica.Models;
 namespace Clinica.Controllers
 {
     public class HomeController : Controller
-    {  
-        public ActionResult Index()
+    {
+        public JsonResult Index()
         {
-            Usuarios usuario = (Usuarios)Session["Usuario"];
-            if (usuario == null)
-            {
-                return RedirectToAction("LogOut", "Login");
-            }
-            ViewBag.estadoMenu = "mm-active";
-            return View();
+            return Json("HOLA", JsonRequestBehavior.AllowGet);
         }
 
     }

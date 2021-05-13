@@ -12,42 +12,38 @@ namespace Clinica.Controllers
     public class PacientesController : Controller
     {
         private DAOPacientes dao = new DAOPacientes();
-        // GET: Pacientes
-        public ActionResult Index()
+        public JsonResult ListarPacientes()
         {
             List<Pacientes> pacientes = dao.getPacientes();
-            ViewBag.estadoPacientes = "mm-active";
-            return View(pacientes);
+            if ((pacientes != null))
+            {
+                return Json(new { pacientes }, JsonRequestBehavior.AllowGet);
+            }
+            return Json("no", JsonRequestBehavior.AllowGet);
         }
 
+
         [HttpPost]
-        public ActionResult Registrar([Bind(Include = "nombre,ape_pat,ape_mat,usuario,password")] Pacientes paciente)
+        public JsonResult Registrar([Bind(Include = "nombre,ape_pat,ape_mat,usuario,password")] Pacientes paciente)
         {
             bool result = dao.agregar(paciente);
             if (result)
             {
-                TempData["resultado"] = "Paciente eliminado con éxito";
+                return Json("exito", JsonRequestBehavior.AllowGet);
             }
-            else
-            {
-                TempData["resultado"] = "Paciente no eliminado";
-            }
-            return RedirectToAction("Index");
+            return Json("no", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult Eliminar(int id)
+        public JsonResult Eliminar(int id)
         {
             bool result = dao.eliminar(id);
             if (result)
             {
-                TempData["resultado"] = "Paciente eliminado con éxito";
+                return Json("exito", JsonRequestBehavior.AllowGet);
             }
-            else
-            {
-                TempData["resultado"] = "Paciente no eliminado";
-            }
-            return RedirectToAction("Index");
+            return Json("no", JsonRequestBehavior.AllowGet);
         }
+
     }
 }

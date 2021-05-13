@@ -21,5 +21,11 @@ namespace Clinica.DAO
             string sql = "SELECT * FROM Pacientes WHERE usuario = @a and password = @b";
             return db.Database.SqlQuery<Pacientes>(sql, new SqlParameter("@a", usuario), new SqlParameter("@b", password)).FirstOrDefault();
         }
+
+        public Usuarios getUsuario(string usuario, string password)
+        {
+            string sql = "SELECT * FROM Usuario WHERE usuario = @a and password = @b";
+            return db.Database.SqlQuery<Usuarios>(sql, new SqlParameter("@a", usuario), new SqlParameter("@b", password)).FirstOrDefault();
+        }
     }
 }
