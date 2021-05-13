@@ -18,12 +18,12 @@ Create table Medicamentos(
 
 /******/
 
-Create Table Doctores(
-    id_doctor INT IDENTITY(1,1) primary key not null,
+Create Table Usuarios(
+    id_usuario INT IDENTITY(1,1) primary key not null,
     nombre varchar(30) not null,
     ape_pat varchar(30) not null,
     ape_mat varchar(30) not null,
-    usuario varchar(25) not null,
+    usuario varchar(80) not null,
     password varchar(64) not null
 )
 
@@ -32,7 +32,7 @@ Create Table Pacientes(
     nombre varchar(30) not null,
     ape_pat varchar(30) not null,
     ape_mat varchar(30) not null,
-    usuario varchar(25) ,
+    usuario varchar(80) ,
     password varchar(64)
 )
 
@@ -67,10 +67,10 @@ Create Table Recetas(
 )
 
 /***********************************************************************/
-INSERT INTO Doctores(nombre,ape_pat,ape_mat,usuario,password) VALUES('Johnny', 'Sins', 'Echeverría','erisso@gmail.com','123');
+INSERT INTO Usuarios(nombre,ape_pat,ape_mat,usuario,password) VALUES('Johnny', 'Sins', 'Echeverría','erisso@gmail.com','DVOZUIQnznlVbNpxkYAgwejRW1M=');
 
 
-INSERT INTO Pacientes(nombre,ape_pat,ape_mat,usuario,password) VALUES('Victor', 'Vasquez', 'Poblete','victor@gmail.com','123');
+INSERT INTO Pacientes(nombre,ape_pat,ape_mat,usuario,password) VALUES('Victor', 'Vasquez', 'Poblete','victoe680@gmail.com','DVOZUIQnznlVbNpxkYAgwejRW1M=');
 
 
 
