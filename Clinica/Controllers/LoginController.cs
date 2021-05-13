@@ -21,33 +21,19 @@ namespace Clinica.Controllers
         {
             return View();
         }
-        //POST:Login
+
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Index(string usu, string pas)
+        public JsonResult LoginUsuario(string usuario, string password)
         {
-            ContextDb db = new ContextDb();
-            string hashPassword = EncodePassword(pas);
-            System.Diagnostics.Debug.WriteLine("Entre al controlador"+usu+" "+hashPassword);
-            Usuarios usuario = DAOUsuarios.getUsuario(usu,hashPassword);
-            if (usuario!=null)
+            bool result = false;
+            Usuarios usuarios = dao.getUsuario(usuario,password);
+            if (usuarios!=null)
             {
-                usuario.password = null;
-                Session["Usuario"] = usuario;
-                Session.Timeout = 30;
-                if (usuario.tipo==0)
-                {
-                    return RedirectToAction("", "Home");
-                }
-                else
-                {
-                    return RedirectToAction("", "Asistente");
-                }
-                
+                result = true;
+                return Json(new { usuarios, result }, JsonRequestBehavior.AllowGet);
             }
-            ViewBag.Mensaje = "El Correo y/o contraseña son incorrecta";
-            ViewBag.usua = usu;
-            return View();
+            return Json("no", JsonRequestBehavior.AllowGet);
         }
 
         //Movil

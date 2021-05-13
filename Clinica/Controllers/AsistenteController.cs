@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http.Cors;
 using System.Web.Mvc;
 using Clinica.DAO;
 using Clinica.Models;
@@ -9,29 +10,18 @@ using Clinica.Objects;
 
 namespace Clinica.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AsistenteController : Controller
     {
         private DAOTicket dao = new DAOTicket();
-        // GET: Asistente
-        public ActionResult Index()
+        public JsonResult ListarTickets()
         {
-            Usuarios usuario = (Usuarios)Session["Usuario"];
-            if (usuario == null)
-            {
-                return RedirectToAction("LogOut", "Login");
-            }
-            ViewBag.estadoMenuAsistente = "mm-active";
             List<TicketObject> tickets = dao.getTickets();
-            return View(tickets);
-        }
-
-
-        public ActionResult Previsualizar(int id)
-        {
-            System.Diagnostics.Debug.WriteLine("Entre a previsualizar");
-            Tickets tickets = dao.getTickect(id);
-            ViewData["doc"] = tickets.documento;
-            return View();
+            if ((tickets != null))
+            {
+                return Json(new { tickets }, JsonRequestBehavior.AllowGet);
+            }
+            return Json("no", JsonRequestBehavior.AllowGet);
         }
 
     }
