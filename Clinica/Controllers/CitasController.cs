@@ -112,11 +112,11 @@ namespace Clinica.Controllers
             if (banderaReceta && banderaTicket)
             {
                 result = true;
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(new { result }, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(new { result }, JsonRequestBehavior.AllowGet);
             }
             
         }

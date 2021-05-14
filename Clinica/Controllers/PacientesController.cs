@@ -23,14 +23,14 @@ namespace Clinica.Controllers
         public JsonResult Registrar([Bind(Include = "nombre,ape_pat,ape_mat,usuario,password")] Pacientes paciente)
         {
             bool result = dao.agregar(paciente);
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult Eliminar(int id)
         {
             bool result = dao.eliminar(id);
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 
     }
