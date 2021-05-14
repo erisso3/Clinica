@@ -14,7 +14,7 @@ namespace Clinica.Controllers
     public class AsistenteController : Controller
     {
         private DAOTicket dao = new DAOTicket();
-        public JsonResult ListarTickets()
+        public JsonResult Tickets()
         {
             List<TicketObject> tickets = dao.getTickets();
             return Json(new { tickets }, JsonRequestBehavior.AllowGet);
@@ -23,8 +23,8 @@ namespace Clinica.Controllers
 
         public JsonResult Previsualizar(int id)
         {
-            Tickets tickets = dao.getTickect(id);
-            return Json(new { tickets},JsonRequestBehavior.AllowGet);
+            TicketObject ticket = dao.getTickect(id);
+            return Json(new { ticket},JsonRequestBehavior.AllowGet);
         }
 
     }
