@@ -48,11 +48,7 @@ namespace Clinica.Controllers
         {
             cita.status = 1;
             bool result = daoCitas.agregar(cita);
-            if (result)
-            {
-                return Json("exito", JsonRequestBehavior.AllowGet);
-            }
-            return Json("no", JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -60,51 +56,14 @@ namespace Clinica.Controllers
         public JsonResult actualizarStatusCita(int id_cita, int status)
         {
             bool result = daoCitas.statusCita(id_cita, status);
-            if (result)
-            {
-                return Json("exito", JsonRequestBehavior.AllowGet);
-            }
-            return Json("no", JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult eliminarCita(int id_cita)
         {
             bool result = daoCitas.eliminarCita(id_cita);
-            if (result)
-            {
-                return Json("exito", JsonRequestBehavior.AllowGet);
-            }
-            return Json("no", JsonRequestBehavior.AllowGet);
-        }
-
-
-
-        //Movil
-        [HttpPost]
-        public JsonResult AgendarCita([Bind(Include = "id_paciente,id_doctor,fecha,hora,observacion")] CitaObject cita)
-        {
-            cita.status = 0;
-            bool result = daoCitas.agregar(cita);
-            if (result)
-            {
-                return Json("exito", JsonRequestBehavior.AllowGet);
-            }
-            return Json("no", JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult MisCitas(int id)
-        {
-            List<CitaObject> lista = daoCitas.getCitasPaciente(id);
-            if (lista !=null)
-            {
-                foreach (var item in lista)
-                {
-                    item.fecha = item.fechag.ToString("dd/MM/yyyy");
-                }
-                return Json(new { lista }, JsonRequestBehavior.AllowGet);
-            }
-            return Json("no", JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult DetallesCita(int id_cita)
@@ -122,6 +81,7 @@ namespace Clinica.Controllers
         {
             bool banderaReceta = false; 
             bool banderaTicket = false;
+            bool result = false;
             List<Medicamento> med = new List<Medicamento>();
             Medicamento aux;
             string ids = "";
@@ -157,13 +117,46 @@ namespace Clinica.Controllers
             }
             if (banderaReceta && banderaTicket)
             {
-                return Json("exito", JsonRequestBehavior.AllowGet);
+                result = true;
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                return Json("no", JsonRequestBehavior.AllowGet);
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
             
-        }  
+        }
+
+
+        /*Esta función es para movil*/
+        [HttpPost]
+        public JsonResult AgendarCita([Bind(Include = "id_paciente,id_doctor,fecha,hora,observacion")] CitaObject cita)
+        {
+            cita.status = 0;
+            bool result = daoCitas.agregar(cita);
+            if (result)
+            {
+                return Json("exito", JsonRequestBehavior.AllowGet);
+            }
+            return Json("no", JsonRequestBehavior.AllowGet);
+        }
+        /*Esta función es para movil*/
+        /*Esta función es para movil*/
+        public JsonResult MisCitas(int id)
+        {
+            List<CitaObject> lista = daoCitas.getCitasPaciente(id);
+            if (lista != null)
+            {
+                foreach (var item in lista)
+                {
+                    item.fecha = item.fechag.ToString("dd/MM/yyyy");
+                }
+                return Json(new { lista }, JsonRequestBehavior.AllowGet);
+            }
+            return Json("no", JsonRequestBehavior.AllowGet);
+        }
+        /*Esta función es para movil*/
+
+
     }
 }
