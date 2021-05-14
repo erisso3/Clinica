@@ -20,7 +20,7 @@ namespace Clinica.Objects
         public int status { get; set; }
 
         public string observacion { get; set; }
-        //
+        
         public string doctor { get; set; }
 
         public DateTime fechag { get; set; }
