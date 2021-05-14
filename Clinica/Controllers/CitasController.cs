@@ -29,19 +29,47 @@ namespace Clinica.Controllers
         private DAOPacientes daoPacientes = new DAOPacientes();
         private DAOTicket daoTicket = new DAOTicket();
         // GET: Citas
-        public JsonResult ListarCitas(int id_usuario)
+        public JsonResult lcPendientes(int id_usuario)
         {
             List<CitasDoctorObject> listaCitasPendientes = daoCitas.getCitasPendientes(id_usuario);
-            List<CitasDoctorObject> listaCitasAceptadas = daoCitas.getCitasAceptadas(id_usuario);
-            List<CitasDoctorObject> listaCitasRechazadas = daoCitas.getCitasRechazadas(id_usuario);
-            List<CitasDoctorObject> listaCitasRealizadas = daoCitas.getCitasRealizadas(id_usuario);
-            List<Pacientes> listaPacientes = daoPacientes.listarPacientes();
-            if ((listaCitasPendientes != null) && (listaCitasAceptadas != null) && (listaCitasRechazadas != null) && (listaCitasRealizadas != null) && (listaPacientes != null))
-            {
-                return Json(new { listaCitasPendientes, listaCitasAceptadas, listaCitasRechazadas, listaCitasRealizadas, listaPacientes }, JsonRequestBehavior.AllowGet);
-            }
-            return Json("no", JsonRequestBehavior.AllowGet);
+            
+            return Json(new { listaCitasPendientes }, JsonRequestBehavior.AllowGet);
+            
         }
+
+
+        public JsonResult lcAceptadas(int id_usuario)
+        {
+            List<CitasDoctorObject> listaCitasAceptadas = daoCitas.getCitasAceptadas(id_usuario);
+
+            return Json(new { listaCitasAceptadas }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult lcRechazadas(int id_usuario)
+        {
+            List<CitasDoctorObject> listaCitasRechazadas = daoCitas.getCitasRechazadas(id_usuario);
+            
+            return Json(new { listaCitasRechazadas }, JsonRequestBehavior.AllowGet); 
+        }
+
+
+        public JsonResult lcRealizadas(int id_usuario)
+        {
+            List<CitasDoctorObject> listaCitasRealizadas = daoCitas.getCitasRealizadas(id_usuario);
+            
+            return Json(new { listaCitasRealizadas }, JsonRequestBehavior.AllowGet);
+            
+        }
+
+
+        public JsonResult lcPacientes(int id_usuario)
+        {
+            List<Pacientes> listaPacientes = daoPacientes.listarPacientes();
+
+            return Json(new { listaPacientes }, JsonRequestBehavior.AllowGet);
+        }
+
 
         [HttpPost]
         public JsonResult AgendarCitaDoctor([Bind(Include = "id_paciente,id_doctor,fecha,hora,observacion")] CitaObject cita)
