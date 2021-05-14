@@ -24,7 +24,7 @@ namespace Clinica.Models
         public string ape_mat { get; set; }
 
         [Required]
-        [StringLength(25)]
+        [StringLength(80)]
         public string usuario { get; set; }
 
         [Required]

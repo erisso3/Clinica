@@ -23,7 +23,7 @@ namespace Clinica.Models
         [StringLength(30)]
         public string ape_mat { get; set; }
 
-        [StringLength(25)]
+        [StringLength(80)]
         public string usuario { get; set; }
 
         [StringLength(64)]
