@@ -13,8 +13,8 @@ namespace Clinica.Objects
         public string ape_pat { get; set; }
         public string ape_mat { get; set; }
         public string usuario { get; set; }
-        public DateTime fecha { get; set; }
-        public TimeSpan hora { get; set; }
+        public string fecha { get; set; }
+        public string hora { get; set; }
         public string observacion { get; set; }
     }
 }

@@ -22,11 +22,7 @@ namespace Clinica.Controllers
         public JsonResult ListarRecetasPacientes(int id)
         {
             List<Recetas> recetas = daoRecetas.getRecetasPaciente(id);
-            if ((recetas != null))
-            {
-                return Json(new { recetas }, JsonRequestBehavior.AllowGet);
-            }
-            return Json("no", JsonRequestBehavior.AllowGet);
+            return Json(new { recetas }, JsonRequestBehavior.AllowGet);
         }
     }
 }
