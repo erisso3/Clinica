@@ -72,7 +72,7 @@ namespace Clinica.DAO
 
         public List<CitasDoctorObject> getCitasAceptadas(int id_doctor)
         {
-            string sql = "select c.id_cita,c.id_paciente, p.nombre+' '+p.ape_pat+' '+ape_mat as nombrePaciente, c.fecha, c.hora, c.observacion from citas c, Pacientes p where id_doctor= @a and c.id_paciente=p.id_paciente and c.status=1";
+            string sql = "select c.id_cita,c.id_paciente, p.nombre+' '+p.ape_pat+' '+ape_mat as nombrePaciente, CONVERT(VARCHAR(10), c.fecha,101) fecha, c.hora, c.observacion from citas c, Pacientes p where id_doctor= @a and c.id_paciente=p.id_paciente and c.status=1";
             return db.Database.SqlQuery<CitasDoctorObject>(sql, new SqlParameter("@a", id_doctor)).ToList();
         }
 
