@@ -20,5 +20,12 @@ namespace Clinica.Controllers
             return Json(new { tickets }, JsonRequestBehavior.AllowGet);
         }
 
+
+        public JsonResult Previsualizar(int id)
+        {
+            Tickets tickets = dao.getTickect(id);
+            return Json(new { tickets},JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

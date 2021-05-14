@@ -24,5 +24,11 @@ namespace Clinica.Controllers
             List<Recetas> recetas = daoRecetas.getRecetasPaciente(id);
             return Json(new { recetas }, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult Previsualizar(int id)
+        {
+            Recetas receta = daoRecetas.getReceta(id);
+            return Json(new { receta }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
