@@ -11,7 +11,10 @@ namespace Clinica.Objects
         public string nombreDoctor { get; set; }
         public string usuarioDoctor { get; set; }
         public string nombrePaciente { get; set; }
-        public DateTime fecha { get; set; }
+        public string fecha { get; set; }
         public double total { get; set; }
+        public int id_cita { get; set; }
+        public string documento{ get; set; }
+        public string ruta { get; set; }
     }
 }

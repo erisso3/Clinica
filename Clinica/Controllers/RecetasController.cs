@@ -1,6 +1,7 @@
 ﻿using Clinica.DAO;
 using Clinica.Models;
 using Clinica.Objects;
+using Clinica.Objects;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
@@ -21,13 +22,13 @@ namespace Clinica.Controllers
 
         public JsonResult ListarRecetasPacientes(int id)
         {
-            List<Recetas> recetas = daoRecetas.getRecetasPaciente(id);
+            List<Receta> recetas = daoRecetas.getRecetasPaciente(id);
             return Json(new { recetas }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Previsualizar(int id)
         {
-            Recetas receta = daoRecetas.getReceta(id);
+            Receta receta = daoRecetas.getReceta(id);
             return Json(new { receta }, JsonRequestBehavior.AllowGet);
         }
     }

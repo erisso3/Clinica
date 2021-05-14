@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using Clinica.Objects;
 
 namespace Clinica.DAO
 {
@@ -41,15 +42,16 @@ namespace Clinica.DAO
             }
             return false;
         }
-        public List<Recetas> getRecetasPaciente(int id)
+        public List<Receta> getRecetasPaciente(int id)
         {
-            string sql = "SELECT r.* FROM Recetas as r WHERE r.id_cita IN (SELECT c.id_cita FROM Citas as c WHERE c.id_paciente = @a)";
-            return db.Database.SqlQuery<Recetas>(sql, new SqlParameter("@a", id)).ToList();
+            string sql = "SELECT r.id_receta,r.id_cita,r.documento,r.ruta,r.ids_medicamentos,CONVERT(VARCHAR(10), r.fecha,101) fecha,r.observacion,r.instruccion FROM Recetas as r WHERE r.id_cita IN (SELECT c.id_cita FROM Citas as c WHERE c.id_paciente = @a )";
+            return db.Database.SqlQuery<Receta>(sql, new SqlParameter("@a", id)).ToList();
         }
 
-        public Recetas getReceta(int id)
+        public Receta getReceta(int id)
         {
-            return db.Recetas.Find(id);
+            string sql = "select r.id_receta,r.id_cita,r.documento,r.ruta,r.ids_medicamentos,CONVERT(VARCHAR(10), r.fecha,101) fecha,r.observacion,r.instruccion FROM Recetas as r where id_receta= @a ";
+            return db.Database.SqlQuery<Receta>(sql, new SqlParameter("@a", id)).ToList().Last();
         }
 
     }

@@ -7,23 +7,20 @@ namespace Clinica.Objects
 {
     public class Receta
     {
-        public int id_receta { set; get; }
-        public int id_cita  { set; get; }
-        public DateTime fecha  { set; get; }
-        public string ids_medicamentos  { set; get; }
-        public string observacion  { set; get; }
-        public string nombre  { set; get; }
+        public int id_receta { get; set; }
 
-        public Receta()
-        {
+        public int id_cita { get; set; }
 
-        }
+        public string documento { get; set; }
 
-        public Receta(string observacion, string nombre, DateTime fecha)
-        {
-            this.observacion = observacion;
-            this.nombre = nombre;
-            this.fecha = fecha;
-        }
+        public string ruta { get; set; }
+
+        public string ids_medicamentos { get; set; }
+
+        public string fecha { get; set; }
+
+        public string observacion { get; set; }
+
+        public string instruccion { get; set; }
     }
 }
