@@ -26,12 +26,10 @@ namespace Clinica.Controllers
         [HttpPost]
         public JsonResult LoginUsuario(string usuario, string password)
         {
-            bool result = false;
             Usuarios usuarios = dao.getUsuario(usuario,password);
             if (usuarios!=null)
             {
-                result = true;
-                return Json(new { usuarios, result }, JsonRequestBehavior.AllowGet);
+                return Json(new { usuarios }, JsonRequestBehavior.AllowGet);
             }
             return Json("no", JsonRequestBehavior.AllowGet);
         }
