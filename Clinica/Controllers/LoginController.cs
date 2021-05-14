@@ -54,6 +54,8 @@ namespace Clinica.Controllers
             bool result = false;
             if (paciente != null)
             {
+                string password = EncodePassword(paciente.password);
+                paciente.password = password;
                 result = daoPacientes.agregar(paciente);
                 return Json(new { result }, JsonRequestBehavior.AllowGet);
             }
