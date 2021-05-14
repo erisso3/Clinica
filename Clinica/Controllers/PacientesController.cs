@@ -15,11 +15,7 @@ namespace Clinica.Controllers
         public JsonResult ListarPacientes()
         {
             List<Pacientes> pacientes = dao.getPacientes();
-            if ((pacientes != null))
-            {
-                return Json(new { pacientes }, JsonRequestBehavior.AllowGet);
-            }
-            return Json("no", JsonRequestBehavior.AllowGet);
+            return Json(new { pacientes }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -27,22 +23,14 @@ namespace Clinica.Controllers
         public JsonResult Registrar([Bind(Include = "nombre,ape_pat,ape_mat,usuario,password")] Pacientes paciente)
         {
             bool result = dao.agregar(paciente);
-            if (result)
-            {
-                return Json("exito", JsonRequestBehavior.AllowGet);
-            }
-            return Json("no", JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult Eliminar(int id)
         {
             bool result = dao.eliminar(id);
-            if (result)
-            {
-                return Json("exito", JsonRequestBehavior.AllowGet);
-            }
-            return Json("no", JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
     }

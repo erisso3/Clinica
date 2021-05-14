@@ -29,48 +29,17 @@ namespace Clinica.Controllers
         private DAOPacientes daoPacientes = new DAOPacientes();
         private DAOTicket daoTicket = new DAOTicket();
         // GET: Citas
-        public JsonResult lcPendientes(int id_usuario)
+        public JsonResult ListarCitas(int id_usuario)
         {
             List<CitasDoctorObject> listaCitasPendientes = daoCitas.getCitasPendientes(id_usuario);
-            
-            return Json(new { listaCitasPendientes }, JsonRequestBehavior.AllowGet);
-            
-        }
-
-
-        public JsonResult lcAceptadas(int id_usuario)
-        {
             List<CitasDoctorObject> listaCitasAceptadas = daoCitas.getCitasAceptadas(id_usuario);
-
-            return Json(new { listaCitasAceptadas }, JsonRequestBehavior.AllowGet);
-        }
-
-
-        public JsonResult lcRechazadas(int id_usuario)
-        {
             List<CitasDoctorObject> listaCitasRechazadas = daoCitas.getCitasRechazadas(id_usuario);
-            
-            return Json(new { listaCitasRechazadas }, JsonRequestBehavior.AllowGet); 
-        }
-
-
-        public JsonResult lcRealizadas(int id_usuario)
-        {
             List<CitasDoctorObject> listaCitasRealizadas = daoCitas.getCitasRealizadas(id_usuario);
-            
-            return Json(new { listaCitasRealizadas }, JsonRequestBehavior.AllowGet);
-            
-        }
-
-
-        public JsonResult lcPacientes(int id_usuario)
-        {
             List<Pacientes> listaPacientes = daoPacientes.listarPacientes();
+            return Json(new { listaCitasPendientes, listaCitasAceptadas, listaCitasRechazadas, listaCitasRealizadas, listaPacientes }, JsonRequestBehavior.AllowGet);
 
-            return Json(new { listaPacientes }, JsonRequestBehavior.AllowGet);
         }
-
-
+       
         [HttpPost]
         public JsonResult AgendarCitaDoctor([Bind(Include = "id_paciente,id_doctor,fecha,hora,observacion")] CitaObject cita)
         {
@@ -97,11 +66,8 @@ namespace Clinica.Controllers
         public JsonResult DetallesCita(int id_cita)
         {
             CitaDetallesObject citaDetalles = daoCitas.getCitaDetalles(id_cita);
-            if ((citaDetalles != null))
-            {
-                return Json(new { citaDetalles }, JsonRequestBehavior.AllowGet);
-            }
-            return Json("no", JsonRequestBehavior.AllowGet);
+            return Json(new { citaDetalles }, JsonRequestBehavior.AllowGet);
+
         }
 
         [HttpPost]

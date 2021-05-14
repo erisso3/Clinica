@@ -52,7 +52,7 @@ namespace Clinica.DAO
 
         public CitaDetallesObject getCitaDetalles(int id_cita)
         {
-            string sql = "select c.id_cita,c.id_paciente, p.nombre, p.ape_pat, ape_mat, p.usuario, c.fecha, c.hora, c.observacion from citas c, Pacientes p where c.id_paciente=p.id_paciente and c.id_cita= @a ;";
+            string sql = "select c.id_cita,c.id_paciente, p.nombre, p.ape_pat, ape_mat, p.usuario, CONVERT(VARCHAR(10), c.fecha,101) fecha, CONVERT(VARCHAR(10),c.hora,8) hora, c.observacion from citas c, Pacientes p where c.id_paciente=p.id_paciente and c.id_cita= @a ;";
             return db.Database.SqlQuery<CitaDetallesObject>(sql, new SqlParameter("@a", id_cita)).ToList().Last();
         }
 
@@ -66,25 +66,25 @@ namespace Clinica.DAO
 
         public List<CitasDoctorObject> getCitasPendientes(int id_doctor)
         {
-            string sql = "select c.id_cita,c.id_paciente, p.nombre+' '+p.ape_pat+' '+ape_mat as nombrePaciente, c.fecha, c.hora, c.observacion from citas c, Pacientes p where id_doctor= @a and c.id_paciente=p.id_paciente and c.status=0";
+            string sql = "select c.id_cita,c.id_paciente, p.nombre+' '+p.ape_pat+' '+ape_mat as nombrePaciente, CONVERT(VARCHAR(10), c.fecha,101) fecha, CONVERT(VARCHAR(10),c.hora,8) hora, c.observacion from citas c, Pacientes p where id_doctor= @a and c.id_paciente=p.id_paciente and c.status=0";
             return db.Database.SqlQuery<CitasDoctorObject>(sql, new SqlParameter("@a", id_doctor)).ToList();
         }
 
         public List<CitasDoctorObject> getCitasAceptadas(int id_doctor)
         {
-            string sql = "select c.id_cita,c.id_paciente, p.nombre+' '+p.ape_pat+' '+ape_mat as nombrePaciente, CONVERT(VARCHAR(10), c.fecha,101) fecha, c.hora, c.observacion from citas c, Pacientes p where id_doctor= @a and c.id_paciente=p.id_paciente and c.status=1";
+            string sql = "select c.id_cita,c.id_paciente, p.nombre+' '+p.ape_pat+' '+ape_mat as nombrePaciente, CONVERT(VARCHAR(10), c.fecha,101) fecha, CONVERT(VARCHAR(10),c.hora,8) hora, c.observacion from citas c, Pacientes p where id_doctor= @a and c.id_paciente=p.id_paciente and c.status=1";
             return db.Database.SqlQuery<CitasDoctorObject>(sql, new SqlParameter("@a", id_doctor)).ToList();
         }
 
         public List<CitasDoctorObject> getCitasRechazadas(int id_doctor)
         {
-            string sql = "select c.id_cita,c.id_paciente, p.nombre+' '+p.ape_pat+' '+ape_mat as nombrePaciente, c.fecha, c.hora, c.observacion from citas c, Pacientes p where id_doctor= @a and c.id_paciente=p.id_paciente and c.status=2";
+            string sql = "select c.id_cita,c.id_paciente, p.nombre+' '+p.ape_pat+' '+ape_mat as nombrePaciente, CONVERT(VARCHAR(10), c.fecha,101) fecha, CONVERT(VARCHAR(10),c.hora,8) hora, c.observacion from citas c, Pacientes p where id_doctor= @a and c.id_paciente=p.id_paciente and c.status=2";
             return db.Database.SqlQuery<CitasDoctorObject>(sql, new SqlParameter("@a", id_doctor)).ToList();
         }
 
         public List<CitasDoctorObject> getCitasRealizadas(int id_doctor)
         {
-            string sql = "select c.id_cita,c.id_paciente, p.nombre+' '+p.ape_pat+' '+ape_mat as nombrePaciente, c.fecha, c.hora, c.observacion from citas c, Pacientes p where id_doctor= @a and c.id_paciente=p.id_paciente and c.status=3";
+            string sql = "select c.id_cita,c.id_paciente, p.nombre+' '+p.ape_pat+' '+ape_mat as nombrePaciente, CONVERT(VARCHAR(10), c.fecha,101) fecha, CONVERT(VARCHAR(10),c.hora,8) hora, c.observacion from citas c, Pacientes p where id_doctor= @a and c.id_paciente=p.id_paciente and c.status=3";
             return db.Database.SqlQuery<CitasDoctorObject>(sql, new SqlParameter("@a", id_doctor)).ToList();
         }
 

@@ -17,11 +17,7 @@ namespace Clinica.Controllers
         public JsonResult ListarTickets()
         {
             List<TicketObject> tickets = dao.getTickets();
-            if ((tickets != null))
-            {
-                return Json(new { tickets }, JsonRequestBehavior.AllowGet);
-            }
-            return Json("no", JsonRequestBehavior.AllowGet);
+            return Json(new { tickets }, JsonRequestBehavior.AllowGet);
         }
 
     }
