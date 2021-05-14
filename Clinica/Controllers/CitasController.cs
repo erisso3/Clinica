@@ -45,7 +45,7 @@ namespace Clinica.Controllers
         {
             cita.status = 1;
             bool result = daoCitas.agregar(cita);
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -53,14 +53,14 @@ namespace Clinica.Controllers
         public JsonResult actualizarStatusCita(int id_cita, int status)
         {
             bool result = daoCitas.statusCita(id_cita, status);
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult eliminarCita(int id_cita)
         {
             bool result = daoCitas.eliminarCita(id_cita);
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult DetallesCita(int id_cita)
