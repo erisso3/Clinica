@@ -40,7 +40,8 @@ namespace Clinica.Controllers
         public JsonResult LoginMovil(string usuario, string password)
         {
             bool result = false;
-            Pacientes paciente = dao.getPaciente(usuario, password);
+            string EP = EncodePassword(password);
+            Pacientes paciente = dao.getPaciente(usuario, EP);
             if (paciente !=null)
             {
                 result = true;
@@ -66,8 +67,11 @@ namespace Clinica.Controllers
         public JsonResult EditarMovil([Bind(Include = "id_paciente,nombre,ape_pat,ape_mat,usuario,password")] Pacientes paciente)
         {
             bool result = false;
+            
             if (paciente != null)
             {
+                string password = EncodePassword(paciente.password);
+                paciente.password = password;
                 result = daoPacientes.editar(paciente);
                 return Json(new { result }, JsonRequestBehavior.AllowGet);
             }
