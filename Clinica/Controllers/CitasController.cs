@@ -71,7 +71,7 @@ namespace Clinica.Controllers
         }
 
         [HttpPost]
-        public JsonResult DetallesCita(int id_cita, string observacion, string indicaciones, string[] ids_medicamentos, string paciente, string nombreCompleto, float cobro, string documentoReceta, string documentoTicket)
+        public JsonResult DetallesCita(int id_cita, string observacion, string indicaciones, string[] ids_medicamentos, string ruta, float cobro, string documentoReceta, string documentoTicket)
         {
             bool banderaReceta = false; 
             bool banderaTicket = false;
@@ -79,7 +79,7 @@ namespace Clinica.Controllers
             List<Medicamento> med = new List<Medicamento>();
             Medicamento aux;
             string ids = "";
-            if ((id_cita>0)&& (observacion != null)&&(indicaciones != null)&& (ids_medicamentos != null)&& (paciente != null)&& (nombreCompleto != null)&& (cobro>0))
+            if ((id_cita>0)&& (observacion != null)&&(indicaciones != null)&& (ids_medicamentos != null)&& (ruta != null)&& (cobro>0))
             {
                 foreach (var item in ids_medicamentos)
                 {
@@ -94,7 +94,7 @@ namespace Clinica.Controllers
                 Citas cita = db.Citas.ToList().Find(x => x.id_cita == id_cita);
                 receta.id_cita = id_cita;
                 receta.fecha = date;
-                receta.ruta = date.Date.ToString("ddMMyyyy") + "-" + paciente + "-Receta.pdf";
+                receta.ruta = ruta;
                 receta.ids_medicamentos = ids;
                 receta.observacion = observacion;
                 receta.instruccion = indicaciones;
@@ -102,7 +102,7 @@ namespace Clinica.Controllers
 
                 ticket.id_cita = id_cita;
                 ticket.documento = documentoTicket;
-                ticket.ruta = date.Date.ToString("ddMMyyyy") + "-" + paciente + "-Recibo.pdf";
+                ticket.ruta = ruta;
                 ticket.fecha = date;
                 ticket.total = cobro;
                 banderaReceta = daoRecetas.agregar(receta, cita);

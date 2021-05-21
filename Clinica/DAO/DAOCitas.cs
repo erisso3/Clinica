@@ -59,7 +59,7 @@ namespace Clinica.DAO
 
         public List<CitaObject> getCitasPaciente(int id)
         {
-            string sql = "SELECT c.id_cita, c.id_paciente, c.id_doctor, c.status, c.observacion, c.fecha as fechag, c.hora as horag , (p.nombre + p.ape_pat+ p.ape_mat) as doctor FROM Citas as c INNER JOIN Pacientes as p ON c.id_paciente = p.id_paciente WHERE c.id_paciente = @a";
+            string sql = "SELECT c.id_cita, c.id_paciente, c.id_doctor, c.status, c.observacion, c.fecha as fechag, c.hora as horag ,(SELECT (d.nombre+' '+ d.ape_pat+' '+ d.ape_mat) FROM Usuarios d WHERE d.id_usuario = c.id_doctor) as doctor FROM Citas as c INNER JOIN Pacientes as p ON c.id_paciente = p.id_paciente WHERE c.id_paciente = @a order by c.id_cita desc";
             return db.Database.SqlQuery<CitaObject>(sql, new SqlParameter("@a", id)).ToList();
         }
 

@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 
 namespace Clinica.Controllers
 {
@@ -24,8 +25,16 @@ namespace Clinica.Controllers
         [HttpPost]
         public JsonResult Registrar([Bind(Include = "nombre,ape_pat,ape_mat,usuario,password")] Pacientes paciente)
         {
-            string password=EncodePassword(paciente.password);
-            paciente.password = password;
+            if (paciente.usuario.IsNullOrWhiteSpace() || paciente.password.IsNullOrWhiteSpace())
+            {
+
+            }
+            else
+            {
+                string password = EncodePassword(paciente.password);
+                paciente.password = password;
+                
+            }
             bool result = dao.agregar(paciente);
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
