@@ -1,6 +1,7 @@
 ﻿using Clinica.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -39,5 +40,78 @@ namespace Clinica.DAO
             return null;
 
         }
+
+        public List<Usuarios> listarUsuarios()
+        {
+            return db.Usuarios.ToList();
+        }
+
+        public bool agregarUsuario(Usuarios usuario)
+        {
+            using (var dbContextTransaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.Usuarios.Add(usuario);
+                    db.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    //hacemos rollback si hay excepción
+                    dbContextTransaction.Rollback();
+
+                }
+            }
+            return false;
+        }
+
+
+        public bool editarUsuario(Usuarios usuario)
+        {
+            using (var dbContextTransaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.Entry(usuario).State = EntityState.Modified;
+                    db.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    //hacemos rollback si hay excepción
+                    dbContextTransaction.Rollback();
+
+                }
+            }
+            return false;
+        }
+
+
+        public bool eliminarUsuario(int id)
+        {
+            using (var dbContextTransaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    Usuarios usuario = db.Usuarios.Find(id);
+                    db.Usuarios.Remove(usuario);
+                    db.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    //hacemos rollback si hay excepción
+                    dbContextTransaction.Rollback();
+
+                }
+            }
+            return false;
+        }
+
+
     }
 }
