@@ -14,7 +14,7 @@ namespace Clinica.Controllers
     public class UsuariosController : Controller
     {
         private DAOUsuarios dao = new DAOUsuarios();
-        public JsonResult ListarPacientes()
+        public JsonResult ListarUsuarios()
         {
             List<Usuarios> pacientes = dao.listarUsuarios();
             return Json(new { pacientes }, JsonRequestBehavior.AllowGet);
