@@ -153,6 +153,7 @@
     <Compile Include="Controllers\MedicamentosController.cs" />
     <Compile Include="Controllers\PacientesController.cs" />
     <Compile Include="Controllers\RecetasController.cs" />
+    <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="DAO\DAOCitas.cs" />
     <Compile Include="DAO\DAOTicket.cs" />
     <Compile Include="DAO\DAOUsuarios.cs" />
@@ -214,6 +215,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Usuarios\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
