@@ -1,0 +1,101 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <meta name="description" content="">
+    <meta name="msapplication-tap-highlight" content="no">
+</head>
+<body>
+    <h1>RUTAS DEL PROYECTO</h1>
+    <hr /><br />
+    <h2>GET</h2>
+    <h3>Listar citar del doctor</h3>
+    <ul>
+        <li>http://proyectoclinica.somee.com/Citas/ListarCitas?id_usuario</li>
+    </ul>
+    <h3>Cargar datos de una cita</h3>
+    <ul>
+        <li>http://proyectoclinica.somee.com/Citas/DetallesCita?id_cita</li>
+    </ul>
+    <h3>Lista de pacientes</h3>
+    <ul>
+        <li>http://proyectoclinica.somee.com/Pacientes/ListarPacientes</li>
+    </ul>
+    <h3>Lista de tickets</h3>
+    <ul>
+        <li>http://proyectoclinica.somee.com/Asistente/Tickets</li>
+    </ul>
+    <h3>Cargar datos del ticket</h3>
+    <ul>
+        <li>http://proyectoclinica.somee.com/Asistente/Previsualizar?id</li>
+    </ul>
+    <h3>Lista de recetas del paciente</h3>
+    <ul>
+        <li>http://proyectoclinica.somee.com/Recetas/ListarRecetasPacientes?id</li>
+    </ul>
+    <h3>Cargar datos del la receta</h3>
+    <ul>
+        <li>http://proyectoclinica.somee.com/Receta/Previsualizar?id</li>
+    </ul>
+    <br /><hr /><br />
+    <h2>POST</h2>
+    <h3>Iniciar sesión</h3>
+    <ul>
+        <li>http://proyectoclinica.somee.com/Login/LoginUsuario</li>
+        <ul>
+            <li>usuario</li>
+            <li>password</li>
+        </ul>
+    </ul>
+    <h3>Agendar cita</h3>
+    <ul>
+        <li>http://proyectoclinica.somee.com/Citas/AgendarCitaDoctor</li>
+        <ul>
+            <li>id_doctor</li>
+            <li>id_paciente</li>
+            <li>status</li>
+            <li>fecha</li>
+            <li>hora</li>
+            <li>observacion</li>
+        </ul>
+    </ul>
+    <h3>Actualizar estado de la cita</h3>
+    <ul>
+        <li>http://proyectoclinica.somee.com/Citas/actualizarStatusCita</li>
+        <ul>
+            <li>id_cita</li>
+            <li>status</li>
+        </ul>
+    </ul>
+    <h3>Eliminar cita</h3>
+    <ul>
+        <li>http://proyectoclinica.somee.com/Citas/eliminarCita</li>
+        <ul>
+            <li>id_cita</li>
+        </ul>
+    </ul>
+    <h3>Registar Paciente</h3>
+    <ul>
+        <li>http://proyectoclinica.somee.com/Pacientes/Registrar</li>
+        <ul>
+            <li>nombre</li>
+            <li>ape_pat</li>
+            <li>ape_mat</li>
+            <li>usuario</li>
+            <li>password</li>
+        </ul>
+    </ul>
+    <h3>Eliminar paciente</h3>
+    <ul>
+        <li>http://proyectoclinica.somee.com/Pacientes/Eliminar</li>
+        <ul>
+            <li>id</li>
+        </ul>
+    </ul>
+</body>
+</html>

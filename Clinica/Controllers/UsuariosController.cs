@@ -7,26 +7,32 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.Http.Cors;
 using System.Web.Mvc;
 
 namespace Clinica.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class UsuariosController : Controller
     {
+
         private DAOUsuarios dao = new DAOUsuarios();
         public JsonResult ListarUsuarios()
         {
-            List<Usuarios> pacientes = dao.listarUsuarios();
-            return Json(new { pacientes }, JsonRequestBehavior.AllowGet);
+            List<Usuarios> listaUsuarios = dao.listarUsuarios();
+            return Json(new { listaUsuarios }, JsonRequestBehavior.AllowGet);
         }
 
 
         [HttpPost]
-        public JsonResult Registrar([Bind(Include = "nombre,ape_pat,ape_mat,usuario,password,tipo")] Usuarios usuario)
+        public JsonResult Registrar([Bind(Include = "nombre,ape_pat,ape_mat,usuario,password,tipo")] Usuarios usuarios)
         {
-            string password = EncodePassword(usuario.password);
-            usuario.password = password;
-            bool result = dao.agregarUsuario(usuario);
+            System.Diagnostics.Debug.WriteLine(usuarios.nombre);
+            System.Diagnostics.Debug.WriteLine(usuarios.ape_pat);
+            System.Diagnostics.Debug.WriteLine(usuarios.ape_mat);
+            string password = EncodePassword(usuarios.password);
+            usuarios.password = password;
+            bool result = dao.agregarUsuario(usuarios);
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 
@@ -50,15 +56,15 @@ namespace Clinica.Controllers
 
 
         [HttpPost]
-        public JsonResult Editar([Bind(Include = "id_usuario,nombre,ape_pat,ape_mat,usuario,password,tipo")] Usuarios usuario)
+        public JsonResult Editar([Bind(Include = "id_usuario,nombre,ape_pat,ape_mat,usuario,password,tipo")] Usuarios usuarios)
         {
             bool result = false;
 
-            if (usuario != null)
+            if (usuarios != null)
             {
-                string password = EncodePassword(usuario.password);
-                usuario.password = password;
-                result = dao.editarUsuario(usuario);
+                string password = EncodePassword(usuarios.password);
+                usuarios.password = password;
+                result = dao.editarUsuario(usuarios);
                 return Json(new { result }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { result }, JsonRequestBehavior.AllowGet);

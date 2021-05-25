@@ -16,9 +16,9 @@ namespace Clinica.Controllers
 {
     public class HomeController : Controller
     {
-        public JsonResult Index()
+        public ActionResult Index()
         {
-            return Json("HOLA", JsonRequestBehavior.AllowGet);
+            return View();
         }
 
     }

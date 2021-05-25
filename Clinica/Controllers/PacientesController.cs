@@ -9,9 +9,12 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
+using System.Web.Http.Cors;
 
 namespace Clinica.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
+
     public class PacientesController : Controller
     {
         private DAOPacientes dao = new DAOPacientes();
